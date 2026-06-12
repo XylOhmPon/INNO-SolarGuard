@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolarGuard – Email-sablonok</title>
+<style>
+  :root{
+    --ink:#16261d; --ink-soft:#4a5f53; --paper:#f6f4ee; --card:#ffffff;
+    --line:#dcdfd4; --green:#2D6B1A; --green2:#4E9A1C; --green-soft:#EFF8E8;
+    --amber:#E8841A; --amber-soft:#FFF8EC; --red:#b4452f; --red-soft:#f7e6e1;
+    --shadow:0 1px 2px rgba(22,38,29,.05),0 6px 22px rgba(22,38,29,.07);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:Arial,Helvetica,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .sheet{max-width:880px;margin:0 auto;padding:34px 26px 48px;}
+  header{display:flex;align-items:center;gap:18px;margin-bottom:6px;}
+  header .mark{width:46px;height:46px;border-radius:11px;background:linear-gradient(150deg,var(--green2),var(--green));
+    display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;flex:none;box-shadow:var(--shadow);}
+  header h1{margin:0;font-size:24px;letter-spacing:-.01em;}
+  header p{margin:2px 0 0;color:var(--ink-soft);font-size:13px;}
+  .divider{height:2.5px;background:var(--green);margin:15px 0 24px;border-radius:2px;}
+
+  .group-label{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
+    font-weight:700;margin:24px 0 10px;}
+
+  .row{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:13px 16px;margin-bottom:10px;box-shadow:var(--shadow);text-decoration:none;color:var(--ink);
+    transition:transform .12s,box-shadow .12s,border-color .12s;}
+  .row:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(22,38,29,.12);border-color:#c2ccbb;}
+  .seq{flex:none;width:36px;height:36px;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:14px;}
+  .seq.g{background:var(--green-soft);color:var(--green);border:1px solid #c2ddcb;}
+  .seq.o{background:var(--amber-soft);color:#8a610f;border:1px solid #ecd6a4;}
+  .seq.r{background:var(--red-soft);color:var(--red);border:1px solid #e7b9ae;}
+  .meta{flex:1;min-width:0;}
+  .meta h3{margin:0 0 2px;font-size:15px;}
+  .meta p{margin:0;font-size:12.5px;color:var(--ink-soft);}
+  .meta .trigger{color:#7a8b80;}
+  .tags{flex:none;display:flex;gap:6px;align-items:center;}
+  .tag{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;}
+  .tag.green{background:var(--green-soft);color:var(--green);}
+  .tag.orange{background:var(--amber-soft);color:#8a610f;}
+  .tag.internal{background:var(--red-soft);color:var(--red);}
+  .open{flex:none;color:var(--green);font-size:18px;font-weight:700;}
+
+  .note{margin-top:24px;font-size:12px;color:var(--ink-soft);background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:13px 16px;line-height:1.6;}
+  .note b{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="mark">S</div>
+    <div>
+      <h1>SolarGuard — Email-sablonok</h1>
+      <p>Az automatikus ügyfél-kommunikáció a folyamat sorrendjében · kattintásra megnyílik · Innovatív Napelem Kft.</p>
+    </div>
+  </header>
+  <div class="divider"></div>
+
+  <div class="group-label">Ügyfél-életciklus</div>
+
+  <a class="row" href="email_1_visszaigazolas.html">
+    <div class="seq g">1</div>
+    <div class="meta"><h3>Visszaigazolás</h3><p class="trigger">Trigger: „Vizsgálat &amp; egyeztetés" státusz</p></div>
+    <div class="tags"><span class="tag green">zöld</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <a class="row" href="email_egyeztetes_fajlkeres.html">
+    <div class="seq g">2</div>
+    <div class="meta"><h3>Egyeztetés / fájlkérés</h3><p class="trigger">Trigger: triázs — pontosító kérdések + fájlfeltöltő link</p></div>
+    <div class="tags"><span class="tag green">zöld</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <a class="row" href="email_fajlfeltoltes_visszaigazolas.html">
+    <div class="seq g">2b</div>
+    <div class="meta"><h3>Fájlfeltöltés-visszaigazolás</h3><p class="trigger">Trigger: sikeres fájlfeltöltés</p></div>
+    <div class="tags"><span class="tag green">zöld</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <a class="row" href="email_arajanlat.html">
+    <div class="seq o">3</div>
+    <div class="meta"><h3>Árajánlat</h3><p class="trigger">Trigger: „Árajánlat kiküldve" · Elfogadás / Módosítást kérek gombok</p></div>
+    <div class="tags"><span class="tag orange">narancs</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <a class="row" href="email_idopont.html">
+    <div class="seq g">4</div>
+    <div class="meta"><h3>Időpont-visszaigazolás</h3><p class="trigger">Trigger: „Árajánlat elfogadva" · ár nélkül</p></div>
+    <div class="tags"><span class="tag green">zöld</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <a class="row" href="email_emlekezteto.html">
+    <div class="seq g">5</div>
+    <div class="meta"><h3>Emlékeztető</h3><p class="trigger">Trigger: kiszállás − 1 nap (időzített)</p></div>
+    <div class="tags"><span class="tag green">zöld</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <a class="row" href="email_jegyzokonyv_szamla.html">
+    <div class="seq g">6</div>
+    <div class="meta"><h3>Jegyzőkönyv + számla</h3><p class="trigger">Trigger: „Elvégezve" · PDF csatolmányok</p></div>
+    <div class="tags"><span class="tag green">zöld</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <a class="row" href="email_ertekeleskeres.html">
+    <div class="seq g">7</div>
+    <div class="meta"><h3>Értékeléskérés</h3><p class="trigger">Trigger: „Lezárva" + X nap (időzített)</p></div>
+    <div class="tags"><span class="tag green">zöld</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <div class="group-label">Speciális ágak</div>
+
+  <a class="row" href="email_tavellenorzes.html">
+    <div class="seq g">↪</div>
+    <div class="meta"><h3>Távellenőrzés-tájékoztató</h3><p class="trigger">Trigger: távolról megoldva → „Lezárva"</p></div>
+    <div class="tags"><span class="tag green">zöld</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <a class="row" href="email_belso_modositas_riasztas.html">
+    <div class="seq r">⚠</div>
+    <div class="meta"><h3>Belső módosítás-riasztás</h3><p class="trigger">Trigger: „Módosítás kérve" · a döntéshozónak, nem ügyfélnek</p></div>
+    <div class="tags"><span class="tag internal">belső</span></div>
+    <div class="open">↗</div>
+  </a>
+
+  <div class="note">
+    <b>Megjegyzés.</b> A sablonok az Innovatív Napelem arculatát követik: a <b>zöld</b> a szerviz-folyamat kommunikációja, a <b>narancs</b> a bejáratott ajánlat-arculat, a <b>piros</b> a belső riasztás. Az összevonási változók (<code>{%Person.Name%}</code>, <code>{%Project.Id%}</code> stb.) és az egyedi mezőkódok a miniCRM-ben véglegesítendők az élesítéskor.
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolarGuard — Automatizált adminisztrációs rendszerterv</title>
+<style>
+  :root{
+    --ink:#16261d;
+    --ink-soft:#3c5446;
+    --paper:#f6f4ee;
+    --card:#fffdf8;
+    --line:#dfe0d4;
+    --green:#1f7a4d;
+    --green-deep:#12553a;
+    --green-soft:#e7f1ea;
+    --amber:#c98a1c;
+    --amber-soft:#fbf1da;
+    --blue:#2f6f8f;
+    --blue-soft:#e3eef3;
+    --red:#b4452f;
+    --red-soft:#f7e6e1;
+    --shadow:0 1px 2px rgba(22,38,29,.05),0 8px 30px rgba(22,38,29,.07);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.62;font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+
+  /* ---- Header ---- */
+  header.masthead{
+    background:linear-gradient(155deg,var(--green-deep) 0%,#0c3d2a 60%,#0a3325 100%);
+    color:#eef4ef;padding:64px 0 56px;position:relative;overflow:hidden;
+  }
+  header.masthead::after{
+    content:"";position:absolute;inset:0;opacity:.10;
+    background-image:radial-gradient(circle at 1px 1px,#fff 1px,transparent 0);
+    background-size:22px 22px;pointer-events:none;
+  }
+  .masthead .wrap{position:relative;z-index:1}
+  .kicker{
+    display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:#9fd9bb;font-weight:700;margin-bottom:18px;
+    border:1px solid rgba(159,217,187,.35);padding:6px 12px;border-radius:999px;
+  }
+  .kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:#5fcf97;box-shadow:0 0 0 4px rgba(95,207,151,.2)}
+  header.masthead h1{
+    font-size:40px;line-height:1.12;margin:0 0 14px;font-weight:800;letter-spacing:-.02em;
+  }
+  header.masthead h1 span{color:#7fe0ac}
+  header.masthead p.lead{
+    font-size:18px;color:#cfe3d6;max-width:640px;margin:0 0 28px;
+  }
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .meta-chip{
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+    padding:7px 13px;border-radius:8px;font-size:13px;color:#dceee3;
+  }
+  .meta-chip b{color:#fff;font-weight:700}
+
+  /* ---- TOC ---- */
+  nav.toc{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);padding:22px 26px;margin:-32px auto 44px;position:relative;z-index:3;
+  }
+  nav.toc h4{margin:0 0 14px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+  nav.toc ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 28px;counter-reset:toc}
+  nav.toc a{
+    display:flex;gap:12px;align-items:baseline;text-decoration:none;color:var(--ink);
+    padding:7px 8px;border-radius:8px;transition:background .15s,color .15s;font-size:15px;
+  }
+  nav.toc a:hover{background:var(--green-soft);color:var(--green-deep)}
+  nav.toc a::before{
+    counter-increment:toc;content:counter(toc,decimal-leading-zero);
+    color:var(--green);font-weight:700;font-variant-numeric:tabular-nums;font-size:13px;min-width:22px;
+  }
+
+  /* ---- Sections ---- */
+  section{padding:14px 0 30px}
+  .sec-head{display:flex;align-items:center;gap:16px;margin:18px 0 22px}
+  .sec-num{
+    flex:none;width:44px;height:44px;border-radius:11px;background:var(--green-soft);
+    color:var(--green-deep);display:grid;place-items:center;font-weight:800;font-size:18px;
+    border:1px solid #cfe3d6;
+  }
+  .sec-head h2{margin:0;font-size:25px;letter-spacing:-.01em;font-weight:800}
+  .sec-head p{margin:2px 0 0;color:var(--ink-soft);font-size:14px}
+  section > .wrap > p, section > p{color:var(--ink-soft)}
+  section p{margin:0 0 15px}
+  h3{font-size:18px;margin:26px 0 12px;font-weight:750}
+  strong{color:var(--ink)}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:13px;
+    padding:22px 24px;margin:18px 0;box-shadow:var(--shadow);
+  }
+
+  /* callouts */
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;display:flex;gap:13px;font-size:14.5px}
+  .callout .ico{flex:none;font-size:18px;line-height:1.4}
+  .callout p{margin:0;color:var(--ink)}
+  .callout.note{background:var(--blue-soft);border:1px solid #c4dde8}
+  .callout.warn{background:var(--amber-soft);border:1px solid #ecd6a4}
+  .callout.risk{background:var(--red-soft);border:1px solid #e9c4ba}
+  .callout.ok{background:var(--green-soft);border:1px solid #c2ddcb}
+
+  /* ---- Flow diagram ---- */
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:24px 0;counter-reset:fl}
+  .flow .node{
+    flex:1 1 150px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px 14px;text-align:center;position:relative;box-shadow:var(--shadow);min-width:140px;
+  }
+  .flow .node .badge{
+    width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;
+    display:grid;place-items:center;margin:0 auto 9px;font-size:14px;
+  }
+  .flow .node h5{margin:0 0 4px;font-size:14.5px;font-weight:750}
+  .flow .node small{color:var(--ink-soft);font-size:12px;line-height:1.4;display:block}
+  .flow .arrow{flex:0 0 26px;display:grid;place-items:center;color:var(--green);font-size:20px;font-weight:700}
+  @media(max-width:680px){
+    .flow{flex-direction:column}
+    .flow .arrow{transform:rotate(90deg);height:24px}
+  }
+
+  /* ---- Layered architecture ---- */
+  .arch{display:grid;gap:12px;margin:22px 0}
+  .layer{
+    display:grid;grid-template-columns:160px 1fr;gap:0;border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;background:var(--card);box-shadow:var(--shadow);
+  }
+  .layer .lbl{
+    background:var(--green-deep);color:#eaf4ee;padding:16px 16px;font-weight:750;font-size:14px;
+    display:flex;flex-direction:column;justify-content:center;gap:3px;
+  }
+  .layer .lbl small{color:#9fd9bb;font-size:11.5px;font-weight:600;letter-spacing:.04em}
+  .layer .body{padding:14px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .pill{
+    background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:6px 12px;
+    font-size:13px;font-weight:600;color:var(--ink);
+  }
+  .pill.tool{background:var(--blue-soft);border-color:#c4dde8;color:#1d556e}
+  .pill.new{background:var(--amber-soft);border-color:#ecd6a4;color:#8a610f}
+  @media(max-width:560px){.layer{grid-template-columns:1fr}.layer .lbl{flex-direction:row;align-items:center;gap:8px}}
+
+  /* ---- Tables ---- */
+  table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  thead th{background:var(--green-deep);color:#eaf4ee;text-align:left;padding:12px 14px;font-weight:700;font-size:13px;letter-spacing:.02em}
+  tbody td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+  tbody tr:nth-child(even){background:#faf8f2}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:650}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;letter-spacing:.02em}
+  .tag.auto{background:var(--green-soft);color:var(--green-deep)}
+  .tag.human{background:var(--amber-soft);color:#8a610f}
+  .tag.sys{background:var(--blue-soft);color:#1d556e}
+
+  /* time chips */
+  .timegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin:18px 0}
+  .timecard{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:14px 16px;box-shadow:var(--shadow)}
+  .timecard .t{font-size:22px;font-weight:800;color:var(--green-deep);font-variant-numeric:tabular-nums}
+  .timecard .t small{font-size:13px;font-weight:600;color:var(--ink-soft)}
+  .timecard h5{margin:6px 0 2px;font-size:14.5px}
+  .timecard p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+
+  /* phases */
+  .phase{display:flex;gap:16px;margin:0 0 4px;padding:18px 0;border-top:1px dashed var(--line)}
+  .phase:first-of-type{border-top:none}
+  .phase .when{flex:none;width:120px}
+  .phase .when b{display:block;font-size:15px;color:var(--green-deep)}
+  .phase .when small{color:var(--ink-soft);font-size:12.5px}
+  .phase .what h4{margin:0 0 6px;font-size:16px}
+  .phase .what ul{margin:0;padding-left:18px}
+  .phase .what li{margin:3px 0;font-size:14.5px}
+
+  ul.clean{list-style:none;padding:0;margin:14px 0}
+  ul.clean li{padding:8px 0 8px 30px;position:relative;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  ul.clean li::before{content:"✓";position:absolute;left:4px;top:8px;color:var(--green);font-weight:800}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.twocol{grid-template-columns:1fr}nav.toc ol{grid-template-columns:1fr}}
+
+  footer{background:var(--ink);color:#c7d3cb;padding:38px 0;margin-top:50px;font-size:13.5px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer b{color:#fff}
+
+  .anchor{scroll-margin-top:20px}
+  hr.soft{border:none;border-top:1px solid var(--line);margin:30px 0}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <span class="kicker">Rendszerterv · belső dokumentum</span>
+    <h1>SolarGuard<br><span>automatizált adminisztrációs rendszer</span></h1>
+    <p class="lead">A lakossági napelem-karbantartási szolgáltatás teljes adminisztrációs gerince — ügyfél-önbejelentéstől a szerelő beosztásáig, automatizálva, emberi felügyelettel.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Verzió <b>0.1 — vázlat</b></span>
+      <span class="meta-chip">Készült <b>2026.06.11</b></span>
+      <span class="meta-chip">Alap: <b>miniCRM + Vercel + n8n</b></span>
+      <span class="meta-chip">Modell: <b>human-in-the-loop</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="toc">
+    <h4>Tartalom</h4>
+    <ol>
+      <li><a href="#cel">Cél és alapelvek</a></li>
+      <li><a href="#arch">Rendszerarchitektúra</a></li>
+      <li><a href="#folyamat">Az ügyfélút folyamata</a></li>
+      <li><a href="#urlap">Az okos bejelentő űrlap</a></li>
+      <li><a href="#tervezo">A tervezőmotor logikája</a></li>
+      <li><a href="#idokeret">Munkatípusok és időkeretek</a></li>
+      <li><a href="#kiszallas">Osztott kiszállás elszámolása</a></li>
+      <li><a href="#kommunikacio">Automatikus kommunikáció</a></li>
+      <li><a href="#felugyelet">Jóváhagyási pontok</a></li>
+      <li><a href="#kockazat">Kockázatok és korlátok</a></li>
+      <li><a href="#fazisok">Bevezetési fázisok</a></li>
+    </ol>
+  </nav>
+</div>
+
+<div class="wrap">
+
+<!-- 1 -->
+<section id="cel" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">1</div>
+    <div><h2>Cél és alapelvek</h2><p>Mit old meg a rendszer, és milyen elvek mentén</p></div>
+  </div>
+
+  <p>A SolarGuard lakossági szolgáltatás akkor skálázható, ha az adminisztráció <strong>nem nő együtt az ügyfélszámmal</strong>. A cél: egy ügyfél bejelentésétől a szerelő helyszínre indulásáig terjedő teljes folyamat automatizálása úgy, hogy a <strong>döntési felelősség emberi kézben marad</strong>, a rutinmunkát viszont a rendszer végzi.</p>
+
+  <div class="card">
+    <h3 style="margin-top:4px">Öt vezérelv</h3>
+    <ul class="clean">
+      <li><strong>Egy belépő, egy adatforrás.</strong> Minden bejelentés ugyanazon az űrlapon érkezik, és egyetlen helyre — a miniCRM-be — kerül. Nincs párhuzamos nyilvántartás.</li>
+      <li><strong>Kategorizálás a forrásnál.</strong> Az űrlap már a bejelentéskor besorolja a munkát, így a csoportosítás és időbecslés automatizálható.</li>
+      <li><strong>Kapacitás-alapú tervezés.</strong> Nem csak a földrajz számít: a napi terv a munkák időigényét is figyeli, hogy reális legyen.</li>
+      <li><strong>Human-in-the-loop.</strong> A rendszer javasol, a vezető jóváhagy. Szerelő sosem indul automatikus, jóvá nem hagyott terv alapján.</li>
+      <li><strong>Átlátható elszámolás.</strong> Az osztott kiszállás az ügyfél felé is kommunikálható előny, nem rejtett kalkuláció.</li>
+    </ul>
+  </div>
+
+  <div class="callout ok">
+    <span class="ico">◎</span>
+    <p><strong>A rendszer határa.</strong> Ez a terv az <em>adminisztrációt</em> automatizálja (bejelentés → besorolás → csoportosítás → beosztás → kommunikáció → elszámolás). A fizikai karbantartás műszaki tartalma és árazása a már elkészült szolgáltatási rendszerdokumentumban van — ez arra épül rá.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="arch" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">2</div>
+    <div><h2>Rendszerarchitektúra</h2><p>Rétegek és a meglévő eszközök szerepe</p></div>
+  </div>
+
+  <p>A rendszer a meglévő eszközeitekre épül — nem zöldmezős fejlesztés. A <span class="pill tool" style="display:inline-block">miniCRM</span> az adatgerinc, a <span class="pill tool" style="display:inline-block">Vercel</span> a nyilvános belépő, az <span class="pill tool" style="display:inline-block">n8n</span> a ragasztó, ami a folyamatokat összeköti.</p>
+
+  <div class="arch">
+    <div class="layer">
+      <div class="lbl">Belépő réteg<small>Front-end</small></div>
+      <div class="body">
+        <span class="pill tool">Vercel — webes űrlap</span>
+        <span class="pill">Feltételes (okos) kérdéslogika</span>
+        <span class="pill new">Ügyfél-visszanéző oldal*</span>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="lbl">Adat réteg<small>System of record</small></div>
+      <div class="body">
+        <span class="pill tool">miniCRM — ügyfél + igény</span>
+        <span class="pill">Munka-kategória mezők</span>
+        <span class="pill">Státusz / pipeline</span>
+        <span class="pill">Helyszín (irányítószám, GPS)</span>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="lbl">Automatizáció<small>Orchestration</small></div>
+      <div class="body">
+        <span class="pill tool">n8n — folyamatmotor</span>
+        <span class="pill">Csoportosító / tervező logika</span>
+        <span class="pill">Email-triggerek státuszváltásra</span>
+        <span class="pill new">Útvonal- &amp; távolság-API*</span>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="lbl">Döntési réteg<small>Human-in-the-loop</small></div>
+      <div class="body">
+        <span class="pill new">Vezetői napiterv-jóváhagyó nézet*</span>
+        <span class="pill">Szerelő napi feladatlista</span>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="lbl">Kcommunikáció<small>Ügyfélcsatorna</small></div>
+      <div class="body">
+        <span class="pill tool">Email (cég-fiók / Gmail)</span>
+        <span class="pill">5 automata érintkezési pont</span>
+        <span class="pill new">Elektronikus jegyzőkönyv-küldés*</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <span class="ico">ℹ︎</span>
+    <p>A <span class="pill new" style="display:inline-block">narancs jelölésű</span> elemek azok, amelyeket <strong>építeni / bekötni kell</strong> — a többi már a kezetekben van. A <strong>*</strong> jelöltek a fejlesztési erőfeszítés súlypontjai; ezekre térünk vissza a fázistervnél.</p>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="folyamat" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">3</div>
+    <div><h2>Az ügyfélút folyamata</h2><p>A bejelentéstől a lezárásig — végponttól végpontig</p></div>
+  </div>
+
+  <div class="flow">
+    <div class="node"><div class="badge">1</div><h5>Bejelentés</h5><small>Ügyfél kitölti az okos űrlapot a weben</small></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="badge">2</div><h5>Besorolás</h5><small>Rendszer kategorizál + időt becsül, miniCRM-be ír</small></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="badge">3</div><h5>Csoportosítás</h5><small>Földrajz + időkeret + SLA szerint napi terv-javaslat</small></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="badge">4</div><h5>Jóváhagyás</h5><small>Vezető átnézi, módosít, jóváhagyja</small></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="badge">5</div><h5>Kiszállás</h5><small>Szerelő a véglegesített útvonalon dolgozik</small></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="badge">6</div><h5>Lezárás</h5><small>Jegyzőkönyv + osztott számla + értékeléskérés</small></div>
+  </div>
+
+  <p style="margin-top:8px">Minden lépéshez tartozik egy automatikus ügyfél-érintkezés (lásd a 8. szakaszt) és egy belső státuszváltás a miniCRM-ben, ami az n8n következő lépését indítja. A lánc egyetlen kézi beavatkozási pontja a <strong>4. lépés vezetői jóváhagyása</strong>.</p>
+
+  <h3>Mikor egyeztetjük a költséget az ügyféllel?</h3>
+  <p>A szervizköltség egyeztetése <strong>két sávon</strong> fut, attól függően, hogy az ár előre ismert-e, vagy csak a helyszíni diagnózis után derül ki. Ez a megkülönböztetés a teljes rendszer szempontjából kritikus, mert javítást <strong>sosem végzünk előzetes ügyfél-jóváhagyás nélkül</strong>.</p>
+
+  <div class="twocol">
+    <div class="card" style="margin:0;border-top:3px solid var(--green)">
+      <h3 style="margin-top:4px">A) Fix-áras munkák</h3>
+      <p style="font-size:13.5px;margin-bottom:10px;color:var(--ink-soft)">Mosás, állapotfelmérés, karbantartási csomag — az ár előre kalkulálható.</p>
+      <ul class="clean">
+        <li>Az ár az <strong>időpont-értesítő emailben</strong> (2. érintkezés) szerepel, a becsült osztott kiszállási díjjal együtt</li>
+        <li>Az ügyfél a <strong>kiszállás visszaigazolásával fogadja el</strong> az árat — kiszállás csak elfogadott ár után</li>
+        <li>A végszámlán már csak a véglegesített osztott díj módosíthat (lefelé)</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0;border-top:3px solid var(--amber)">
+      <h3 style="margin-top:4px">B) Javítás / csere</h3>
+      <p style="font-size:13.5px;margin-bottom:10px;color:var(--ink-soft)">Az ár csak a helyszíni diagnózis után derül ki — de a javítás jellemzően azonnal megtörténik.</p>
+      <ul class="clean">
+        <li>A szervizautók <strong>fel vannak szerelve teljes javításhoz</strong>, így a bevett alkatrészek a helyszínen, azonnal cserélhetők</li>
+        <li><strong>Helyszíni jóváhagyás:</strong> a szerelő feltárja a hibát, a helyszínen árat egyeztet → az ügyfél jóváhagyja → azonnali csere</li>
+        <li>A számlát <strong>az elvégzett javításra, helyben</strong> állítjuk ki — a jóváhagyás dokumentálva (aláírás / jegyzőkönyv)</li>
+        <li><strong>Kivétel:</strong> nem-készletezett speciális alkatrész → árajánlat + külön kiszállás beszerzés után</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="ico">⚠︎</span>
+    <p><strong>A helyszíni jóváhagyás a fő eset.</strong> Mivel az autók készletezve vannak, a B) sáv döntő része <em>egyetlen kiszállásban</em> lezárul: diagnózis → helyszíni ár-egyeztetés → ügyfél igenje → azonnali csere → számla az elvégzett munkára. A jóváhagyás dokumentálva van, így a javítás sosem számlázódik az ügyfél hozzájárulása nélkül. A „felmérés → árajánlat → külön kiszállás" hurok csak a ritka speciális-alkatrész esetnél lép be, ahol nincs készleten az adott komponens.</p>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="urlap" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">4</div>
+    <div><h2>Az okos bejelentő űrlap</h2><p>Laikus tölti ki — a rendszernek mégis pontosan kell besorolnia</p></div>
+  </div>
+
+  <p>Mivel az <strong>ügyfél maga jelent be</strong>, az űrlap nem kérdezhet szakmai nyelven. A megoldás: feltételes (elágazó) kérdéssor, ami tüneteket kérdez, és a háttérben sorol be szervizkategóriába. Az ügyfél „mit tapasztal" kérdésekre felel, a rendszer ebből „milyen munka kell" választ képez.</p>
+
+  <div class="twocol">
+    <div class="card">
+      <h3 style="margin-top:4px">Amit az ügyféltől kérünk</h3>
+      <ul class="clean">
+        <li>Cím / irányítószám <span class="tag sys">földrajzhoz</span></li>
+        <li>Mi a probléma? (választható tünetek)</li>
+        <li>Rendszer mérete (kW) — ha tudja</li>
+        <li>Van-e akkumulátor / mióta üzemel</li>
+        <li>Fotó / képernyőkép feltöltés (opcionális)</li>
+        <li>Sürgősség érzete + elérhetőség</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:4px">Amit a rendszer kiszámol</h3>
+      <ul class="clean">
+        <li><strong>Szervizkategória</strong> (pl. inverterhiba, mosás, felmérés)</li>
+        <li><strong>Becsült időigény</strong> a kategória alapján</li>
+        <li><strong>SLA-sáv</strong> (sürgős hiba vs. tervezhető karbantartás)</li>
+        <li><strong>Régió-besorolás</strong> az irányítószámból</li>
+        <li><strong>Tag / nem tag</strong> státusz (kedvezmény, prioritás)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="ico">⚠︎</span>
+    <p><strong>Tervezési döntés a besorolásnál.</strong> A laikus bejelentés mindig pontatlan lehet. Ezért a rendszer besorolása <em>előzetes</em>: a vezető a jóváhagyásnál felülírhatja a kategóriát és az időkeretet, mielőtt a terv véglegesül. Így egy téves önbejelentés nem borítja fel a napot.</p>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="tervezo" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">5</div>
+    <div><h2>A tervezőmotor logikája</h2><p>Hogyan lesz a beérkező igényekből reális napi terv</p></div>
+  </div>
+
+  <p>Ez a rendszer szíve. A tervező nem egyszerű „közeli címek egy csokorba" logika — egy <strong>kapacitás-korlátos útvonaltervezés</strong>, amely három tényezőt mérlegel egyszerre:</p>
+
+  <div class="twocol" style="margin:18px 0">
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:4px">A három bemenet</h3>
+      <ul class="clean">
+        <li><strong>Földrajzi közelség</strong> — egy napra csak egymáshoz közeli helyszínek kerülnek</li>
+        <li><strong>Munka időigénye</strong> — minden kategóriának van alap-időkerete (6. szakasz)</li>
+        <li><strong>SLA-határidő</strong> — a sürgős hiba előrébb sorolódik, mint a tervezhető karbantartás</li>
+      </ul>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="margin-top:4px">A korlát</h3>
+      <p>Egy szerelői munkanap <strong>hasznos kapacitása</strong> (pl. ~7 óra helyszíni munka + utazás). A tervező addig tölti fel a napot, amíg a munkák <em>összesített</em> időigénye + a köztük lévő utazás belefér — nem darabszámra, hanem időre tervez.</p>
+      <p style="margin-bottom:0;font-size:13.5px;color:var(--ink-soft)">Így nem fordulhat elő, hogy 3 nagy munka egy napra kerül, amikor időben kettő is alig fér be.</p>
+    </div>
+  </div>
+
+  <h3>A tervező lépései (n8n folyamat)</h3>
+  <table>
+    <thead><tr><th style="width:34px">#</th><th>Lépés</th><th>Mit csinál</th><th style="width:90px">Típus</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td>Nyitott igények lekérése</td><td>miniCRM-ből minden „beosztásra vár" státuszú igény</td><td><span class="tag sys">rendszer</span></td></tr>
+      <tr><td class="num">2</td><td>Régiós csoportosítás</td><td>Irányítószám / GPS alapján földrajzi fürtök képzése</td><td><span class="tag auto">auto</span></td></tr>
+      <tr><td class="num">3</td><td>Időkeret-összegzés</td><td>Fürtön belül a munkák időigénye + becsült utazás</td><td><span class="tag auto">auto</span></td></tr>
+      <tr><td class="num">4</td><td>SLA-rangsor</td><td>Sürgős igények előresorolása a határidő szerint</td><td><span class="tag auto">auto</span></td></tr>
+      <tr><td class="num">5</td><td>Napra bontás</td><td>Kapacitásig feltöltött, sorrendezett napi terv-javaslatok</td><td><span class="tag auto">auto</span></td></tr>
+      <tr><td class="num">6</td><td>Jóváhagyásra küldés</td><td>A javaslat a vezetői nézetbe kerül döntésre</td><td><span class="tag human">ember</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout note">
+    <span class="ico">ℹ︎</span>
+    <p><strong>Induláskor egyszerűbben is működik.</strong> A 2–5. lépés indulhat egy könnyített „közelség + időösszeg" heurisztikával (valódi útvonal-optimalizáló API nélkül). A térkép-alapú, perces utazásidővel számoló verzió a 2. fázis — addig a vezetői jóváhagyás kompenzálja a pontatlanságot.</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="idokeret" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">6</div>
+    <div><h2>Munkatípusok és időkeretek</h2><p>A skálázás alapja: minden kategóriához tartozik egy alap-időkeret</p></div>
+  </div>
+
+  <p>A tervező csak akkor tud reálisan számolni, ha minden szervizkategóriához van egy <strong>alapértelmezett időigény</strong>. Ezek kiindulási értékek — finomítjuk, ahogy valós adat gyűlik. A vezető a jóváhagyásnál egyedileg felülírhatja őket.</p>
+
+  <div class="timegrid">
+    <div class="timecard"><div class="t">~1,5 <small>óra</small></div><h5>Állapotfelmérés</h5><p>Tagsági belépő feltétel; műszeres átvizsgálás</p></div>
+    <div class="timecard"><div class="t">~2 <small>óra</small></div><h5>Panelmosás</h5><p>Méret- és tetőtípus-függő; nagyobb rendszernél több</p></div>
+    <div class="timecard"><div class="t">~3 <small>óra</small></div><h5>Inverter-hibakeresés</h5><p>Diagnosztika + lehetséges helyszíni javítás</p></div>
+    <div class="timecard"><div class="t">~2,5 <small>óra</small></div><h5>Akkumulátor-ellenőrzés</h5><p>BMS, cellafeszültség, SOC/SOH kiértékelés</p></div>
+    <div class="timecard"><div class="t">~1 <small>óra</small></div><h5>Éves karbantartás (alap)</h5><p>Checklist-alapú átvizsgálás meglévő dokumentációval</p></div>
+    <div class="timecard"><div class="t">változó</div><h5>Javítás / csere</h5><p>A feltárt hiba szerint; külön becslés a felmérés után</p></div>
+  </div>
+
+  <div class="callout ok">
+    <span class="ico">◎</span>
+    <p><strong>Ez a tábla bővül.</strong> Ahogy a valós kiszállások adata gyűlik, az időkeretek pontosíthatók — a rendszer így idővel egyre jobban tervez. Érdemes a szerelőnek a munka végén rögzíttetni a <em>tényleges</em> időt, hogy legyen mihez kalibrálni.</p>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="kiszallas" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">7</div>
+    <div><h2>Osztott kiszállás elszámolása</h2><p>Egyenlő elosztás — átlátható, és önmagában értékesítési érv</p></div>
+  </div>
+
+  <p>Amikor egy napra több, egymáshoz közeli ügyfél kerül, a kiszállási költséget elosztjuk közöttük. A választott logika: <strong>a teljes napi útvonal kiszállási díja osztva az aznapi ügyfelek számával</strong> — egyenlően.</p>
+
+  <div class="card">
+    <h3 style="margin-top:4px">A számítás</h3>
+    <p style="font-size:17px;text-align:center;margin:10px 0;font-family:'Segoe UI'">
+      <strong>Egy ügyfél kiszállási díja&nbsp;=&nbsp;</strong>
+      <span style="display:inline-block;border-bottom:2px solid var(--green);padding:0 10px 2px">teljes napi útvonal díja</span>
+      &nbsp;÷&nbsp; aznapi ügyfelek száma
+    </p>
+    <hr class="soft">
+    <p style="margin-bottom:0"><strong>Példa:</strong> egy keleti körút teljes kiszállási díja 24&nbsp;000&nbsp;Ft, 4 ügyfél van aznap → fejenként <strong>6&nbsp;000&nbsp;Ft</strong> a teljes helyett. Az ügyfélnek kommunikálva: <em>„Mivel a környékeden többekhez is kimentünk, a kiszállási díjad a teljesnek a töredéke."</em></p>
+  </div>
+
+  <div class="callout warn">
+    <span class="ico">⚠︎</span>
+    <p><strong>Kulcsrészlet a rendszerben.</strong> Bejelentéskor még nem tudjuk, hányan lesznek aznap. Ezért az ügyfél a bejelentéskor egy <strong>becsült maximumot</strong> lát, és a <strong>végszámlán</strong> jelenik meg a kedvezményes, osztott összeg. A díj csak a napi terv véglegesítésekor (4. lépés után) rögzül. Ezt az űrlapnak és az árajánlatnak is egyértelműen kommunikálnia kell, hogy ne legyen félreértés.</p>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="kommunikacio" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">8</div>
+    <div><h2>Automatikus kommunikáció</h2><p>Öt fix + egy feltételes érintkezési pont, emailen, a miniCRM státuszaira kötve</p></div>
+  </div>
+
+  <p>A teljes ügyfél-életciklus automatizált, <strong>emailes</strong> csatornán. Minden üzenetet egy miniCRM-státuszváltás indít az n8n-en keresztül — nincs kézi levelezés.</p>
+
+  <table>
+    <thead><tr><th style="width:34px">#</th><th>Érintkezési pont</th><th>Mi váltja ki</th><th>Tartalom</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td><strong>Visszaigazolás</strong></td><td>Űrlap beérkezik</td><td>„Megkaptuk a bejelentésed" + ügyszám + mi a következő lépés</td></tr>
+      <tr><td class="num">2</td><td><strong>Időpont- és ár-értesítés</strong></td><td>Napi terv jóváhagyva</td><td>Kiszállás dátuma, becsült idősáv, <strong>a fix-áras munka díja</strong> + becsült osztott kiszállás — az ügyfél visszaigazolással fogadja el</td></tr>
+      <tr><td class="num">3</td><td><strong>Emlékeztető</strong></td><td>Kiszállás előtt 1 nappal (időzített)</td><td>Holnap jövünk — elérhetőség, mit készítsen elő</td></tr>
+      <tr><td class="num">★</td><td><strong>Javítási árajánlat</strong> <span class="tag human">feltételes</span></td><td>Csak speciális, nem-készletezett alkatrész kell</td><td>Tételes árajánlat + <strong>jóváhagyó link/gomb</strong> — külön kiszállás beszerzés után. (A helyben elvégzett javításokhoz nincs rá szükség, ott a jóváhagyás a helyszínen történik.)</td></tr>
+      <tr><td class="num">4</td><td><strong>Jegyzőkönyv</strong></td><td>Munka lezárva</td><td>Elektronikus karbantartási jegyzőkönyv + végszámla az osztott díjjal</td></tr>
+      <tr><td class="num">5</td><td><strong>Értékeléskérés</strong></td><td>Jegyzőkönyv után (időzített)</td><td>Elégedettség / vélemény kérése, opcionális ajánlási link</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13.5px;color:var(--ink-soft);margin-top:-6px"><strong>★</strong> A javítási árajánlat email csak a <strong>speciális, nem-készletezett alkatrész</strong> esetén lép be (B) sáv kivétele). A bevett javítások a helyszínen, jóváhagyással és azonnal lezárulnak; a fix-áras munkák ára pedig már a 2. érintkezésben elfogadásra került.</p>
+
+  <div class="callout note">
+    <span class="ico">✉︎</span>
+    <p><strong>Küldő fiók.</strong> Érdemes egy dedikált cég-email címet használni (pl. <em>szerviz@…</em>) a személyes Gmail helyett — egységes feladó, jobb kézbesíthetőség, és a válaszok is egy helyre futnak be. A sablonok a miniCRM-ből perszonalizálhatók (név, ügyszám, időpont, összeg).</p>
+  </div>
+</section>
+
+<!-- 9 -->
+<section id="felugyelet" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">9</div>
+    <div><h2>Jóváhagyási pontok</h2><p>Hol avatkozik be ember — és hol nem</p></div>
+  </div>
+
+  <p>A rendszer elvégzi a nehéz munkát, de a <strong>felelősség emberé marad</strong>. A választott modell: a rendszer kész napi terv-javaslatot tesz, a vezető egy kattintással jóváhagyja vagy módosítja.</p>
+
+  <table>
+    <thead><tr><th>Lépés</th><th>Ki végzi</th><th>Megjegyzés</th></tr></thead>
+    <tbody>
+      <tr><td>Bejelentés besorolása</td><td><span class="tag auto">automatikus</span></td><td>Előzetes — a jóváhagyásnál felülírható</td></tr>
+      <tr><td>Csoportosítás &amp; napi terv</td><td><span class="tag auto">automatikus</span></td><td>Javaslatként, nem véglegesen</td></tr>
+      <tr><td><strong>Napi terv jóváhagyása</strong></td><td><span class="tag human">vezető</span></td><td><strong>Az egyetlen kötelező emberi kapu</strong> — itt módosítható sorrend, kategória, idő</td></tr>
+      <tr><td>Ügyfél-értesítések</td><td><span class="tag auto">automatikus</span></td><td>Jóváhagyás után indul a teljes email-lánc</td></tr>
+      <tr><td>Helyszíni munka</td><td><span class="tag human">szerelő</span></td><td>A véglegesített napi feladatlista alapján</td></tr>
+      <tr><td>Lezárás &amp; számla</td><td><span class="tag auto">automatikus</span></td><td>Szerelő „kész" jelzésére indul</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <h3 style="margin-top:4px">Mit lát a vezető a jóváhagyó nézetben</h3>
+    <ul class="clean">
+      <li>A javasolt nap: kik, hol, milyen sorrendben, mennyi idő — egy képernyőn</li>
+      <li>Összesített napi kapacitás-kihasználtság (belefér-e, van-e még hely)</li>
+      <li>Drag &amp; drop átrendezés, kategória/időkeret felülírás</li>
+      <li>Egy gomb: <strong>Jóváhagyom</strong> → innen minden automatikus</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="kockazat" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">10</div>
+    <div><h2>Kockázatok és korlátok</h2><p>Amit indulás előtt tudni kell</p></div>
+  </div>
+
+  <div class="callout risk">
+    <span class="ico">▲</span>
+    <p><strong>Laikus besorolás pontatlansága.</strong> Az ügyfél tévesen ítélhet meg egy hibát, ami felborítja az időtervet. <em>Kezelés:</em> a besorolás előzetes, a vezetői kapu korrigál; sürgős/bizonytalan eseteknél előzetes távdiagnosztika a kiszállás előtt.</p>
+  </div>
+  <div class="callout risk">
+    <span class="ico">▲</span>
+    <p><strong>Országos lefedettség egy szerelővel.</strong> A kapacitás-alapú tervező segít, de a távoli régiók csak ütemezett körutakkal vagy alvállalkozóval fedhetők le reálisan. A garantált reakcióidő sávozása (mag-régió szigorúbb, távoli régió lazább) a szolgáltatási dokumentumban rögzítve.</p>
+  </div>
+  <div class="callout risk">
+    <span class="ico">▲</span>
+    <p><strong>Osztott díj kommunikációja.</strong> Ha az ügyfél a végszámlán mást lát, mint amire számított, panasz lehet. <em>Kezelés:</em> a becsült maximum + „lehet ennél kevesebb" üzenet már a bejelentéskor, minden érintkezési ponton megerősítve.</p>
+  </div>
+  <div class="callout risk">
+    <span class="ico">▲</span>
+    <p><strong>Email-kézbesíthetőség.</strong> Az egész kommunikáció emailen áll vagy bukik. <em>Kezelés:</em> dedikált, hitelesített küldő domain (SPF/DKIM), és a kritikus értesítéseknél (időpont) később SMS-kiegészítés megfontolandó.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="fazisok" class="anchor">
+  <div class="sec-head">
+    <div class="sec-num">11</div>
+    <div><h2>Bevezetési fázisok</h2><p>Mivel kezdjünk — a legkisebb működő rendszertől felfelé</p></div>
+  </div>
+
+  <div class="card" style="padding:8px 24px">
+    <div class="phase">
+      <div class="when"><b>1. fázis</b><small>~1–2 hét</small></div>
+      <div class="what">
+        <h4>Manuális mag — a folyamat élesítése</h4>
+        <ul>
+          <li>Okos űrlap a Vercelen → miniCRM-be ír (kategória + helyszín mezők)</li>
+          <li>1. és 4. email (visszaigazolás, jegyzőkönyv) automatizálva n8n-nel</li>
+          <li>A napi tervet a vezető <em>kézzel</em> rakja össze a miniCRM listából — még nincs auto-csoportosítás</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="when"><b>2. fázis</b><small>~2–3 hét</small></div>
+      <div class="what">
+        <h4>Tervezőmotor + teljes email-lánc</h4>
+        <ul>
+          <li>n8n csoportosító heurisztika (közelség + időösszeg) → napi terv-javaslat</li>
+          <li>Vezetői jóváhagyó nézet (induláshoz akár egy egyszerű felület is elég)</li>
+          <li>Mind az 5 email-érintkezés élesben; osztott díj kalkuláció a véglegesítésnél</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="when"><b>3. fázis</b><small>~3–4 hét</small></div>
+      <div class="what">
+        <h4>Optimalizálás &amp; skálázás</h4>
+        <ul>
+          <li>Valódi útvonal-/távolság-API perces utazásidővel</li>
+          <li>Időkeretek kalibrálása a valós kiszállási adatokból</li>
+          <li>Alvállalkozói régiók bekötése a tervezőbe; SLA-sávok érvényesítése</li>
+          <li>Mérőszámok: napi kihasználtság, átfutási idő, osztott-díj megtakarítás</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout ok">
+    <span class="ico">▸</span>
+    <p><strong>Következő lépés.</strong> Ahogy kérted, ez a rendszerterv az alaptérkép. Innen lépésről lépésre haladunk: a logikus folytatás az <strong>1. fázis</strong> — az okos űrlap mezőstruktúrája és a miniCRM-be írás konkrét kidolgozása. Szólj, és azzal kezdjük.</p>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div>SolarGuard — Automatizált adminisztrációs rendszerterv · <b>belső munkadokumentum</b></div>
+    <div>v0.1 · 2026.06.11 · Innovatív Napelem Kft.</div>
+  </div>
+</footer>
+
+</body>
+</html>

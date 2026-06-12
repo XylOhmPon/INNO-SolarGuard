@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="hu">
+<!--
+  SolarGuard email – SZERVIZ ÁRAJÁNLAT (a meglévő narancs arculatos ajánlat-sablon alapján)
+  Trigger: az adatlap "Árajánlat kiküldve" státuszba kerül (kiszállást igénylő eset)
+  Javasolt tárgy: Árajánlatunk a napelemes rendszer szervizére – Innovatív Napelem
+  Gombok: AJÁNLAT ELFOGADÁSA / MÓDOSÍTÁST KÉREK
+   - Elfogadás → "Árajánlat elfogadva" státusz → indul az időpont-egyeztető mail
+   - Módosítást kérek → "Módosítás kérve" státusz → a döntéshozó AZONNAL figyelmeztetést
+     kap (a folyamat NEM áll meg); a tracking-linkek miniCRM-ben generálódnak per-címzett.
+  Megjegyzés: az egyedi mezők (MunkaLeiras, AjanlatOsszeg) kódja véglegesítendő.
+-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Innovatív Napelem – Szerviz árajánlat</title>
+</head>
+<body style="margin:0; padding:0; background-color:#eef0f4;">
+
+	<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#eef0f4;">
+		<tbody>
+			<tr>
+				<td align="center" style="padding:30px 0;">
+
+					<table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff; max-width:600px;">
+						<tbody>
+							<!-- NARANCSSÁRGA TETŐSÁV -->
+							<tr>
+								<td style="background-color:#e87820; height:4px; font-size:4px; line-height:4px;">&nbsp;</td>
+							</tr>
+
+							<!-- LOGÓ -->
+							<tr>
+								<td align="center" style="padding:30px 30px 20px 30px; background-color:#ffffff;">
+									<a href="https://innovativnapelem.hu/" target="_blank" rel="noopener noreferrer">
+										<img src="https://cdn.minicrm.hu/doc/2026/01-30/c/q/cqb-eOWftI5k2gFKV1W_YQ-57284" alt="Innovatív Napelem Kft." width="190" style="display:block; border:0;">
+									</a>
+								</td>
+							</tr>
+
+							<!-- ELVÁLASZTÓ VONAL -->
+							<tr>
+								<td style="padding:0 30px;">
+									<table width="100%" cellpadding="0" cellspacing="0" border="0">
+										<tbody>
+											<tr>
+												<td style="border-top:1px solid #e5e7eb; font-size:1px; line-height:1px;">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+
+							<!-- BEVEZETŐ -->
+							<tr>
+								<td style="padding:22px 30px 10px 30px; font-family:Arial,sans-serif; color:#374151; font-size:15px; line-height:160%;">
+									<p style="margin:0 0 14px 0;">Tisztelt <strong>{%Person.Name%}</strong>!</p>
+									<p style="margin:0;">
+										Köszönjük megkeresését és a rendelkezésünkre bocsátott adatokat. Az egyeztetés alapján elkészítettük <strong>árajánlatunkat</strong> a napelemes rendszerén elvégzendő szervizmunkára.
+									</p>
+								</td>
+							</tr>
+
+							<!-- AJÁNLAT TARTALMA -->
+							<tr>
+								<td style="padding:8px 30px 8px 30px;">
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #dde1ea; background-color:#f9fafb;">
+										<tbody>
+											<tr>
+												<td style="padding:20px 22px; font-family:Arial,sans-serif; font-size:14px; line-height:165%; color:#374151;">
+													<p style="margin:0 0 12px 0; font-family:Georgia,'Times New Roman',serif; color:#1a1a1a; font-size:15px; font-weight:bold; letter-spacing:0.2px;">Ajánlatunk tartalma</p>
+													<p style="margin:0 0 12px 0; color:#374151; font-size:14px;">{%Project.MunkaLeiras%}</p>
+													<table width="100%" cellpadding="0" cellspacing="0" border="0">
+														<tbody>
+															<tr>
+																<td style="font-family:Arial,sans-serif; font-size:15px; color:#1a1a1a; font-weight:bold; border-top:1px solid #e5e7eb; padding-top:12px;">Ajánlati ár</td>
+																<td align="right" style="font-family:Arial,sans-serif; font-size:15px; color:#e87820; font-weight:bold; border-top:1px solid #e5e7eb; padding-top:12px;">{%Project.AjanlatOsszeg%}</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+
+							<!-- CTA BLOKK -->
+							<tr>
+								<td style="padding:8px 30px 8px 30px;">
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f0f1f3; border-top:3px solid #e87820;">
+										<tbody>
+											<tr>
+												<td style="padding:22px 22px 20px 22px;">
+													<p style="margin:0 0 16px 0; font-family:Georgia,'Times New Roman',serif; color:#1a1a1a; font-size:16px; line-height:145%; font-weight:bold;">
+														Kérjük, jelezze döntését egy kattintással:
+													</p>
+
+													<table cellpadding="0" cellspacing="0" border="0" align="left">
+														<tbody>
+															<tr>
+																<td align="center" style="background-color:#e87820;">
+																	<a href="https://r3.minicrm.hu/Click-57284-0iuwnradjg0rhb6tealq1qsihrs801-{%Project.Hash%}-{%Other.TrackIdHash%}" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:14px 24px; font-family:Arial,sans-serif; font-size:14px; font-weight:bold; color:#ffffff; text-decoration:none; letter-spacing:0.5px;" class="mc_track mc_identify mc_project_identify mc_contact_identify ">✅ AJÁNLAT ELFOGADÁSA</a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+
+													<table cellpadding="0" cellspacing="0" border="0" align="right">
+														<tbody>
+															<tr>
+																<td align="center" style="border:1px solid #c0c4cc; background-color:#ffffff;">
+																	<a href="https://r3.minicrm.hu/Click-57284-0kb46pu2z62h4to6ms4e0dsofe2o86-{%Project.Hash%}-{%Other.TrackIdHash%}" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding:14px 20px; font-family:Arial,sans-serif; font-size:13px; font-weight:bold; color:#374151; text-decoration:none; letter-spacing:0.3px;" class="mc_track mc_identify mc_project_identify mc_contact_identify ">✏️ MÓDOSÍTÁST KÉREK</a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+
+													<div style="clear:both; height:14px; font-size:14px; line-height:14px;">&nbsp;</div>
+
+													<p style="margin:6px 0 0 0; font-family:Arial,sans-serif; color:#6b7280; font-size:12.5px; line-height:150%;">
+														Módosítási igény esetén a folyamat nem áll meg — kollégánk <strong>haladéktalanul</strong> felveszi Önnel a kapcsolatot az ajánlat pontosítása érdekében.
+													</p>
+
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+
+							<!-- AJÁNLATKÉRŐ ADATOK -->
+							<tr>
+								<td style="padding:8px 30px 8px 30px;">
+									<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #dde1ea; background-color:#f9fafb;">
+										<tbody>
+											<tr>
+												<td style="padding:20px 22px; font-family:Arial,sans-serif; font-size:14px; line-height:165%; color:#374151;">
+													<p style="margin:0 0 14px 0; font-family:Georgia,'Times New Roman',serif; color:#1a1a1a; font-size:15px; font-weight:bold; letter-spacing:0.2px;">Ajánlatkérő adatai</p>
+													<p style="margin:0 0 5px 0; color:#6b7280; font-size:13px;">Név: <strong style="color:#1a1a1a;">{%Person.Name%}</strong></p>
+													<p style="margin:0 0 5px 0; color:#6b7280; font-size:13px;">Cím: <strong style="color:#1a1a1a;">{%Address.PostalCode%} {%Address.City%}, {%Address.Address%}</strong></p>
+													<p style="margin:0 0 5px 0; color:#6b7280; font-size:13px;">E-mail: <strong style="color:#1a1a1a;">{%Person.Email%}</strong></p>
+													<p style="margin:0; color:#6b7280; font-size:13px;">Telefon: <strong style="color:#1a1a1a;">{%Person.Phone%}</strong></p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+
+							<!-- ELVÁLASZTÓ -->
+							<tr>
+								<td style="padding:10px 30px 0 30px;">
+									<table width="100%" cellpadding="0" cellspacing="0" border="0">
+										<tbody>
+											<tr>
+												<td style="border-top:1px solid #e5e7eb; font-size:1px; line-height:1px;">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+
+							<!-- ALÁÍRÁS -->
+							<tr>
+								<td style="padding:18px 30px 28px 30px; font-family:Arial,sans-serif; color:#374151; font-size:14px; line-height:160%;">
+									<p style="margin:0 0 10px 0; color:#4b5563;">
+										Kérem, ha kérdése merül fel, forduljon hozzám bizalommal!
+									</p>
+									<p style="margin:0; color:#4b5563;">
+										<br> {%Sender.EmailSignature%}
+									</p>
+								</td>
+							</tr>
+
+							<!-- NARANCSSÁRGA KÖZÉPSŐ SÁV -->
+							<tr>
+								<td style="background-color:#e87820; height:2px; font-size:2px; line-height:2px;">&nbsp;</td>
+							</tr>
+
+							<!-- LÁBLÉC -->
+							<tr>
+								<td style="padding:26px 30px 28px 30px; background-color:#f0f1f3;">
+									<table width="100%" cellpadding="0" cellspacing="0" border="0">
+										<tbody>
+											<tr>
+												<td align="center" style="padding-bottom:16px;">
+													<a href="https://innovativnapelem.hu/" target="_blank" rel="noopener noreferrer">
+														<img src="https://cdn.minicrm.hu/doc/2026/01-30/c/q/cqb-eOWftI5k2gFKV1W_YQ-57284" alt="Innovatív Napelem" width="150" style="display:block; border:0; margin:0 auto;">
+													</a>
+												</td>
+											</tr>
+											<tr>
+												<td align="center" style="font-family:Arial,sans-serif;">
+													<p style="margin:0 0 5px 0; color:#1a1a1a; font-size:15px; font-weight:bold; letter-spacing:0.3px;">Innovatív Napelem Kft.</p>
+													<p style="margin:0; font-size:13px;">
+														<a href="https://innovativnapelem.hu/" style="color:#e87820; text-decoration:none; letter-spacing:0.3px;">innovativnapelem.hu</a>
+													</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+
+							<!-- NARANCSSÁRGA ALSÓ SÁV -->
+							<tr>
+								<td style="background-color:#e87820; height:4px; font-size:4px; line-height:4px;">&nbsp;</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

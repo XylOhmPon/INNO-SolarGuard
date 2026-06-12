@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="hu">
+<!--
+  SolarGuard automata email #1 – VISSZAIGAZOLÁS ("Megkaptuk a bejelentésed")
+  Trigger: az adatlap "Besorolva" státuszba kerül (besoroló automatizmus után)
+  Javasolt tárgy: Megkaptuk a bejelentésed – Innovatív Napelem SolarGuard
+  Megjegyzés: az egyedi mezők kódja a miniCRM-ben véglegesítendő;
+  itt a szándékolt összevonási változók szerepelnek.
+-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="x-apple-disable-message-reformatting">
+	<meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+	<title>Innovatív Napelem – Bejelentés visszaigazolása</title>
+	<!--[if mso]>
+	<noscript>
+		<xml>
+			<o:officedocumentsettings>
+				<o:pixelsperinch>96</o:pixelsperinch>
+			</o:officedocumentsettings>
+		</xml>
+	</noscript>
+	<![endif]-->
+	<style type="text/css">
+		body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+		table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+		img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+		body { margin: 0 !important; padding: 0 !important; background-color: #f4f4f4; width: 100% !important; }
+		.wrapper { background-color: #f4f4f4; width: 100%; }
+		.container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+		@media only screen and (max-width: 620px) {
+			.container { width: 100% !important; }
+			.content-padding { padding: 24px 16px !important; }
+			.logo-cell { padding: 24px 16px 16px 16px !important; }
+			.box-cell { padding: 14px 14px !important; }
+			.footer-cell { padding: 20px 16px !important; }
+			.logo-img { max-width: 240px !important; }
+		}
+	</style>
+</head>
+<body>
+
+	<table border="0" cellpadding="0" cellspacing="0" width="100%" class="wrapper">
+		<tbody>
+			<tr>
+				<td align="center" valign="top">
+
+					<table border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="max-width:600px;">
+						<tbody>
+							<!-- LOGO -->
+							<tr>
+								<td align="center" class="logo-cell" style="padding:28px 32px 20px 32px;background-color:#ffffff;">
+									<img src="https://cdn.minicrm.hu/doc/2026/03-27/W/X/WXMy8rUIAqBYOxVzyaKp7A-57284" alt="Innovatív Napelem" width="280" class="logo-img" style="display:block;max-width:280px;width:100%;height:auto;border:0;outline:none;text-decoration:none;">
+								</td>
+							</tr>
+
+							<!-- GREEN SEPARATOR -->
+							<tr>
+								<td style="padding:0 32px;">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td style="border-bottom:2.5px solid #2D6B1A;font-size:0;line-height:0;">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+
+							<!-- MAIN CONTENT -->
+							<tr>
+								<td class="content-padding" style="padding:24px 32px 0 32px;background-color:#ffffff;">
+
+									<!-- GREETING -->
+									<p style="margin:0 0 20px 0;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#222222;font-weight:bold;">Tisztelt {%Person.Name%}!</p>
+
+									<!-- CONFIRMATION BOX (green) -->
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;">
+										<tbody>
+											<tr>
+												<td class="box-cell" style="background-color:#EFF8E8;border-left:4px solid #4E9A1C;padding:16px 18px;border-radius:4px;">
+													<p style="margin:0 0 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">
+														Köszönjük, hogy minket választott! <strong>Megkaptuk a bejelentését</strong> a napelemes rendszerével kapcsolatban, és munkatársunk már foglalkozik vele.
+													</p>
+													<p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">
+														Bejelentésének azonosítója: <strong>#{%Project.Id%}</strong><br>
+														Helyszín: <strong>{%Address.PostalCode%} {%Address.City%}, {%Address.Address%}</strong>
+													</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<!-- NEXT STEPS BOX (gray-green) -->
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;">
+										<tbody>
+											<tr>
+												<td class="box-cell" style="background-color:#F5F5F0;border-left:4px solid #4E9A1C;padding:16px 18px;border-radius:4px;">
+													<table border="0" cellpadding="0" cellspacing="0" width="100%">
+														<tbody>
+															<tr>
+																<td valign="top" width="30" style="padding-right:8px;padding-top:1px;">
+																	<table border="0" cellpadding="0" cellspacing="0">
+																		<tbody>
+																			<tr>
+																				<td align="center" valign="middle" style="width:22px;height:22px;background-color:#4E9A1C;border-radius:11px;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:900;color:#ffffff;line-height:22px;text-align:center;">!</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+																<td valign="top">
+																	<p style="margin:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#4E9A1C;font-weight:bold;">Mi történik most?</p>
+																	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+																		<tbody>
+																			<tr>
+																				<td valign="top" width="16" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#4E9A1C;line-height:1.6;padding-top:1px;">1.</td>
+																				<td valign="top" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;padding-bottom:6px;">Szakértőnk <strong>áttekinti a bejelentését</strong>, és szükség esetén további adatot vagy fotót kérünk.</td>
+																			</tr>
+																			<tr>
+																				<td valign="top" width="16" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#4E9A1C;line-height:1.6;padding-top:1px;">2.</td>
+																				<td valign="top" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;padding-bottom:6px;">Felmérjük, mi orvosolható <strong>távolról</strong> (ingyenes ellenőrzés), és mi igényel kiszállást.</td>
+																			</tr>
+																			<tr>
+																				<td valign="top" width="16" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#4E9A1C;line-height:1.6;padding-top:1px;">3.</td>
+																				<td valign="top" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;padding-bottom:6px;">Ha kiszállás szükséges, <strong>részletes árajánlatot</strong> küldünk, amelyet Ön hagy jóvá.</td>
+																			</tr>
+																			<tr>
+																				<td valign="top" width="16" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#4E9A1C;line-height:1.6;padding-top:1px;">4.</td>
+																				<td valign="top" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">Az <strong>elfogadott ajánlat</strong> után egyeztetjük a kiszállás időpontját, majd elvégezzük a munkát.</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<!-- INFO BOX (blue) -->
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;">
+										<tbody>
+											<tr>
+												<td class="box-cell" style="background-color:#EAF4FB;border-left:4px solid #3A9AD9;padding:16px 18px;border-radius:4px;">
+													<table border="0" cellpadding="0" cellspacing="0" width="100%">
+														<tbody>
+															<tr>
+																<td valign="top" width="30" style="padding-right:8px;padding-top:2px;">
+																	<table border="0" cellpadding="0" cellspacing="0">
+																		<tbody>
+																			<tr>
+																				<td align="center" valign="middle" style="width:22px;height:22px;background-color:#3A9AD9;border-radius:11px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#ffffff;line-height:22px;text-align:center;font-weight:bold;">i</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+																<td valign="top">
+																	<p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">
+																		Ha időközben <strong>új információ</strong> merül fel (pl. fotó a hibáról, az inverter által kijelzett hibakód), egyszerűen <strong>válaszoljon erre az e-mailre</strong> — minden adat segíti a gyorsabb megoldást.
+																	</p>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<!-- CLOSING TEXT -->
+									<p style="margin:0 0 20px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">
+										Kérdés esetén állunk rendelkezésére. Köszönjük a bizalmát!
+									</p>
+
+								</td>
+							</tr>
+
+							<!-- FOOTER -->
+							<tr>
+								<td class="footer-cell" style="padding:4px 32px 32px 32px;background-color:#ffffff;">
+									<p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">{%Sender.EmailSignature%}</p>
+								</td>
+							</tr>
+
+							<tr>
+								<td style="height:16px;background-color:#f4f4f4;font-size:0;line-height:0;">&nbsp;</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

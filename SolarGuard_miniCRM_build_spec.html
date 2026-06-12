@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolarGuard – miniCRM build-spec</title>
+<style>
+  :root{
+    --ink:#16261d; --ink-soft:#4a5f53; --paper:#f6f4ee; --card:#ffffff;
+    --line:#dcdfd4; --green:#2D6B1A; --green2:#4E9A1C; --green-soft:#EFF8E8;
+    --amber:#E8841A; --amber-soft:#FFF8EC; --blue:#3A9AD9; --blue-soft:#EAF4FB;
+    --red:#b4452f; --red-soft:#f7e6e1; --shadow:0 1px 2px rgba(22,38,29,.05),0 6px 22px rgba(22,38,29,.07);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:Arial,Helvetica,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .sheet{max-width:1040px;margin:0 auto;padding:34px 26px 50px;}
+  header{display:flex;align-items:center;gap:18px;margin-bottom:6px;}
+  header .mark{width:46px;height:46px;border-radius:11px;background:linear-gradient(150deg,var(--green2),var(--green));
+    display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;flex:none;box-shadow:var(--shadow);}
+  header h1{margin:0;font-size:24px;letter-spacing:-.01em;}
+  header p{margin:2px 0 0;color:var(--ink-soft);font-size:13px;}
+  .divider{height:2.5px;background:var(--green);margin:15px 0 22px;border-radius:2px;}
+
+  h2.sec{font-size:16px;margin:28px 0 10px;display:flex;align-items:center;gap:9px;}
+  h2.sec .b{width:25px;height:25px;border-radius:7px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-size:13px;font-weight:800;border:1px solid #c2ddcb;}
+  p.lead{font-size:13px;color:var(--ink-soft);margin:0 0 10px;}
+
+  /* statuses */
+  .statuses{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0;}
+  .st{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);
+    border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600;box-shadow:var(--shadow);}
+  .st .num{width:18px;height:18px;border-radius:50%;background:var(--green);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center;}
+  .st.side{border-style:dashed;color:var(--ink-soft);}
+  .st.side .num{background:var(--amber);}
+
+  table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;overflow:hidden;margin:8px 0 6px;}
+  thead th{background:var(--green);color:#eaf4ee;text-align:left;padding:8px 11px;font-size:11.5px;}
+  tbody td{padding:7px 11px;border-top:1px solid var(--line);vertical-align:top;}
+  tbody tr:nth-child(even){background:#faf8f2;}
+  code{background:#eef0ea;border-radius:4px;padding:1px 6px;font-size:11px;color:#3c5446;white-space:nowrap;}
+  .ty{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;background:var(--blue-soft);color:#1d556e;white-space:nowrap;}
+  .src{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px;white-space:nowrap;}
+  .src.form{background:var(--green-soft);color:var(--green);}
+  .src.auto{background:#ece4f4;color:#6b4e8a;}
+  .src.man{background:var(--amber-soft);color:#8a610f;}
+  .src.sys{background:#e7eef0;color:#3a6070;}
+
+  .grp{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin:16px 0 4px;}
+
+  .list{display:grid;gap:8px;margin:6px 0;}
+  .item{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 14px;box-shadow:var(--shadow);display:flex;gap:11px;}
+  .item .tag{flex:none;font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;height:fit-content;}
+  .item .tag.f{background:var(--green-soft);color:var(--green);}
+  .item .tag.a{background:#ece4f4;color:#6b4e8a;}
+  .item h4{margin:0 0 2px;font-size:13.5px;}
+  .item p{margin:0;font-size:12px;color:var(--ink-soft);}
+
+  .callout{border-radius:10px;padding:12px 15px;margin:14px 0 0;font-size:12.5px;line-height:1.6;display:flex;gap:10px;}
+  .callout.amber{background:var(--amber-soft);border:1px solid #ecd6a4;} .callout .i{flex:none;font-weight:800;}
+
+  ol.build{counter-reset:b;list-style:none;padding:0;margin:6px 0;}
+  ol.build li{counter-increment:b;position:relative;padding:9px 0 9px 36px;border-bottom:1px solid var(--line);font-size:13px;}
+  ol.build li:last-child{border-bottom:none;}
+  ol.build li::before{content:counter(b);position:absolute;left:0;top:8px;width:24px;height:24px;border-radius:50%;
+    background:var(--green);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center;}
+  .gate{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;background:var(--amber-soft);color:#8a610f;margin-left:6px;}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="mark">S</div>
+    <div>
+      <h1>SolarGuard — miniCRM build-spec</h1>
+      <p>Pipeline, mezők, űrlapok, automatizmusok · az élesítés referenciája · Innovatív Napelem Kft.</p>
+    </div>
+  </header>
+  <div class="divider"></div>
+
+  <p class="lead">Ez a lap az élesítéshez szükséges konkrét beállításokat foglalja össze. A mezőkódok <strong>javaslatok</strong> — a miniCRM az automatizmusokban ezekre hivatkozik; a végleges kódok a létrehozáskor rögzülnek. <strong>Semmi nem készül el élesben e dokumentum alapján automatikusan</strong> — az építés elemenként, jóváhagyással történik.</p>
+
+  <!-- PIPELINE -->
+  <h2 class="sec"><span class="b">1</span> Pipeline</h2>
+  <p class="lead">Új, dedikált szerviz-pipeline (nem az Innovatív/SunElectric Sales-pipeline). Név: <strong>SolarGuard Szerviz</strong>.</p>
+  <div class="statuses">
+    <span class="st"><span class="num">1</span> Új bejelentés</span>
+    <span class="st"><span class="num">2</span> Vizsgálat &amp; egyeztetés</span>
+    <span class="st"><span class="num">3</span> Távfelügyeleti ellenőrzés</span>
+    <span class="st"><span class="num">4</span> Árajánlat kiküldve</span>
+    <span class="st"><span class="num">5</span> Árajánlat elfogadva</span>
+    <span class="st"><span class="num">6</span> Időpont egyeztetve</span>
+    <span class="st"><span class="num">7</span> Elvégezve</span>
+    <span class="st"><span class="num">8</span> Lezárva</span>
+  </div>
+  <div class="statuses">
+    <span class="st side"><span class="num">↪</span> Módosítás kérve</span>
+    <span class="st side"><span class="num">↪</span> Meghiúsult</span>
+  </div>
+
+  <!-- FIELDS -->
+  <h2 class="sec"><span class="b">2</span> Mezők</h2>
+
+  <div class="grp">A) Intake mezők — az űrlap tölti</div>
+  <table>
+    <thead><tr><th>Mező</th><th>Típus</th><th>Opciók / megjegyzés</th><th>Forrás</th></tr></thead>
+    <tbody>
+      <tr><td>Név</td><td><span class="ty">rendszer</span></td><td><code>{%Person.Name%}</code></td><td><span class="src sys">rendszer</span></td></tr>
+      <tr><td>E-mail</td><td><span class="ty">rendszer</span></td><td><code>{%Person.Email%}</code></td><td><span class="src sys">rendszer</span></td></tr>
+      <tr><td>Telefon</td><td><span class="ty">rendszer</span></td><td><code>{%Person.Phone%}</code></td><td><span class="src sys">rendszer</span></td></tr>
+      <tr><td>Cím</td><td><span class="ty">rendszer</span></td><td><code>{%Address.Address%}</code></td><td><span class="src sys">rendszer</span></td></tr>
+      <tr><td>Irányítószám</td><td><span class="ty">rendszer</span></td><td><code>{%Address.PostalCode%}</code> · régióhoz</td><td><span class="src sys">rendszer</span></td></tr>
+      <tr><td>Mi a probléma?</td><td><span class="ty">többválasztós</span></td><td>6 tünet-opció (lásd űrlap-spec)</td><td><span class="src form">űrlap</span></td></tr>
+      <tr><td>Rendszer mérete</td><td><span class="ty">legördülő</span></td><td>nem tudom / &lt;5 / 5–10 / 10–15 / 15–30 / 30+ kW</td><td><span class="src form">űrlap</span></td></tr>
+      <tr><td>Van akkumulátor?</td><td><span class="ty">legördülő</span></td><td>igen / nem / nem tudom</td><td><span class="src form">űrlap</span></td></tr>
+      <tr><td>Mióta üzemel?</td><td><span class="ty">legördülő</span></td><td>&lt;1 / 1–3 / 3–5 / 5+ év / nem tudom</td><td><span class="src form">űrlap</span></td></tr>
+      <tr><td>Sürgősség</td><td><span class="ty">legördülő</span></td><td>Nem sürgős / Hamarosan / Sürgős</td><td><span class="src form">űrlap</span></td></tr>
+      <tr><td>Probléma leírása</td><td><span class="ty">hosszú szöveg</span></td><td>szabad szöveg</td><td><span class="src form">űrlap</span></td></tr>
+      <tr><td>Csatolt fájlok</td><td><span class="ty">fájl</span></td><td>opcionális az intake-en is</td><td><span class="src form">űrlap</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="grp">B) Számolt mezők — a besoroló automatizmus tölti</div>
+  <table>
+    <thead><tr><th>Mező</th><th>Típus</th><th>Opciók / megjegyzés</th><th>Forrás</th></tr></thead>
+    <tbody>
+      <tr><td>Szervizkategória</td><td><span class="ty">legördülő</span></td><td>Állapotfelmérés / Inverter-hibakeresés / Akkumulátor-ellenőrzés / Éves karbantartás</td><td><span class="src auto">auto</span></td></tr>
+      <tr><td>Becsült időkeret</td><td><span class="ty">szám (óra)</span></td><td>kategória szerint (1 / 1,5 / 2,5 / 3)</td><td><span class="src auto">auto</span></td></tr>
+      <tr><td>SLA-sáv</td><td><span class="ty">legördülő</span></td><td>Sürgős / Normál / Tervezhető</td><td><span class="src auto">auto</span></td></tr>
+      <tr><td>Régió</td><td><span class="ty">legördülő</span></td><td>irányítószám-tartomány szerint (kitöltendő)</td><td><span class="src auto">auto</span></td></tr>
+      <tr><td>Tag/nem tag</td><td><span class="ty">legördülő</span></td><td>Meglévő ügyfél / Új ügyfél</td><td><span class="src auto">auto</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="grp">C) Beosztási &amp; munkamezők — tervező / kézi / szerelő</div>
+  <table>
+    <thead><tr><th>Mező</th><th>Típus</th><th>Opciók / megjegyzés</th><th>Forrás</th></tr></thead>
+    <tbody>
+      <tr><td>Munkaleírás (ajánlat)</td><td><span class="ty">hosszú szöveg</span></td><td><code>{%Project.MunkaLeiras%}</code> · árajánlat emailhez</td><td><span class="src man">kézi</span></td></tr>
+      <tr><td>Ajánlati ár</td><td><span class="ty">összeg</span></td><td><code>{%Project.AjanlatOsszeg%}</code></td><td><span class="src man">kézi</span></td></tr>
+      <tr><td>Kiszállás dátuma</td><td><span class="ty">dátum</span></td><td><code>{%Project.KiszallasDatuma%}</code></td><td><span class="src man">tervező</span></td></tr>
+      <tr><td>Kiszállás idősáv</td><td><span class="ty">szöveg</span></td><td><code>{%Project.KiszallasIdosav%}</code></td><td><span class="src man">tervező</span></td></tr>
+      <tr><td>Beosztott szerelő</td><td><span class="ty">felhasználó</span></td><td>—</td><td><span class="src man">tervező</span></td></tr>
+      <tr><td>Napi terv azonosító</td><td><span class="ty">szöveg</span></td><td>a csoportosításhoz</td><td><span class="src auto">tervező</span></td></tr>
+      <tr><td>Osztott kiszállási díj</td><td><span class="ty">összeg</span></td><td>a napi terv véglegesítésekor</td><td><span class="src man">tervező</span></td></tr>
+      <tr><td>Üzenet a szerelőnek</td><td><span class="ty">szöveg</span></td><td>—</td><td><span class="src man">kézi</span></td></tr>
+      <tr><td>Tényleges időtartam</td><td><span class="ty">szám (óra)</span></td><td>kalibrációhoz, a szerelő rögzíti</td><td><span class="src man">szerelő</span></td></tr>
+      <tr><td>Távellenőrzés eredménye</td><td><span class="ty">hosszú szöveg</span></td><td><code>{%Project.TavellenorzesEredmeny%}</code></td><td><span class="src man">kézi</span></td></tr>
+      <tr><td>Fájlfeltöltő link</td><td><span class="ty">link</span></td><td><code>{%Project.FajlfeltoltoLink%}</code></td><td><span class="src sys">rendszer</span></td></tr>
+      <tr><td>Értékelés link</td><td><span class="ty">link</span></td><td><code>{%Project.ErtekelesLink%}</code></td><td><span class="src sys">rendszer</span></td></tr>
+      <tr><td>Adatlap URL</td><td><span class="ty">link</span></td><td><code>{%Project.Url%}</code> · belső riasztáshoz</td><td><span class="src sys">rendszer</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- FORMS -->
+  <h2 class="sec"><span class="b">3</span> Űrlapok</h2>
+  <div class="list">
+    <div class="item"><span class="tag f">űrlap</span><div><h4>Bejelentő űrlap (Belépési pont)</h4><p>Az A) intake mezőket gyűjti → új adatlap <code>Új bejelentés</code> státuszban. Weboldalra ágyazható / önálló link.</p></div></div>
+    <div class="item"><span class="tag f">űrlap</span><div><h4>Fájlfeltöltő űrlap</h4><p>A meglévő adatlaphoz kötött feltöltés; egyedi link e-mailben a triázs során.</p></div></div>
+  </div>
+
+  <!-- AUTOMATIONS -->
+  <h2 class="sec"><span class="b">4</span> Automatizmusok</h2>
+  <div class="list">
+    <div class="item"><span class="tag a">auto</span><div><h4>Besoroló</h4><p><code>Új bejelentés</code> → kategória/idő/SLA/régió/tag számítás → <code>Vizsgálat &amp; egyeztetés</code> + 1. e-mail.</p></div></div>
+    <div class="item"><span class="tag a">auto</span><div><h4>Fájlfeltöltés-visszaigazolás</h4><p>sikeres feltöltés → 2b. e-mail.</p></div></div>
+    <div class="item"><span class="tag a">auto</span><div><h4>Árajánlat-gombok</h4><p>Elfogadás → <code>Árajánlat elfogadva</code> → 4. e-mail; Módosítás → <code>Módosítás kérve</code> → belső riasztás (CRM-teendő + e-mail).</p></div></div>
+    <div class="item"><span class="tag a">auto</span><div><h4>Időpont / Emlékeztető / Jegyzőkönyv / Értékelés</h4><p>státusz- és időzítés-alapú e-mail-triggerek (4–7).</p></div></div>
+    <div class="item"><span class="tag a">auto</span><div><h4>Távellenőrzés-lezárás</h4><p>távolról megoldva → <code>Lezárva</code> + tájékoztató e-mail.</p></div></div>
+  </div>
+
+  <!-- BUILD ORDER -->
+  <h2 class="sec"><span class="b">5</span> Build-sorrend (elemenként, jóváhagyással)</h2>
+  <ol class="build">
+    <li>Pipeline + státuszok + mezők létrehozása <span class="gate">jóváhagyás</span></li>
+    <li>Bejelentő űrlap + fájlfeltöltő űrlap <span class="gate">jóváhagyás</span></li>
+    <li>Besoroló automatizmus — teszt-adaton <span class="gate">jóváhagyás</span></li>
+    <li>E-mail-sablonok feltöltése + triggerek (1, 2b, 4–7 + speciális) <span class="gate">jóváhagyás</span></li>
+    <li>Árajánlat-gombok + belső riasztás <span class="gate">jóváhagyás</span></li>
+    <li>Tervezőmotor (heurisztika, n8n) <span class="gate">jóváhagyás</span></li>
+    <li>Teljes teszt egy próba-bejelentéssel végig <span class="gate">jóváhagyás</span></li>
+  </ol>
+
+  <div class="callout amber"><span class="i">!</span><div><b>Nyitott a build előtt:</b> az irányítószám-tartományok (régió), a kiszállási díj képlete + utazási ráhagyás, valamint a tünet-szövegek/sávhatárok végső csiszolása. Ezek pótolhatók az 1. lépés előtt.</div></div>
+
+</div>
+</body>
+</html>

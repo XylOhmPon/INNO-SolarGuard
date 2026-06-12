@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolarGuard – Tervezőmotor</title>
+<style>
+  :root{
+    --ink:#16261d; --ink-soft:#4a5f53; --paper:#f6f4ee; --card:#ffffff;
+    --line:#dcdfd4; --green:#2D6B1A; --green2:#4E9A1C; --green-soft:#EFF8E8;
+    --amber:#E8841A; --amber-soft:#FFF8EC; --blue:#3A9AD9; --blue-soft:#EAF4FB;
+    --shadow:0 1px 2px rgba(22,38,29,.05),0 6px 22px rgba(22,38,29,.07);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:Arial,Helvetica,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .sheet{max-width:1000px;margin:0 auto;padding:34px 26px 50px;}
+  header{display:flex;align-items:center;gap:18px;margin-bottom:6px;}
+  header .mark{width:46px;height:46px;border-radius:11px;background:linear-gradient(150deg,var(--green2),var(--green));
+    display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;flex:none;box-shadow:var(--shadow);}
+  header h1{margin:0;font-size:24px;letter-spacing:-.01em;}
+  header p{margin:2px 0 0;color:var(--ink-soft);font-size:13px;}
+  .divider{height:2.5px;background:var(--green);margin:15px 0 22px;border-radius:2px;}
+
+  h2.sec{font-size:16px;margin:26px 0 10px;display:flex;align-items:center;gap:9px;}
+  h2.sec .b{width:24px;height:24px;border-radius:7px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;font-size:13px;font-weight:800;border:1px solid #c2ddcb;}
+
+  .inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px;}
+  @media(max-width:760px){.inputs{grid-template-columns:1fr;}}
+  .inp{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px;box-shadow:var(--shadow);}
+  .inp h4{margin:0 0 3px;font-size:13.5px;}
+  .inp p{margin:0;font-size:12px;color:var(--ink-soft);}
+
+  .step{display:flex;gap:14px;padding:14px 0;border-bottom:1px dashed var(--line);}
+  .step:last-of-type{border-bottom:none;}
+  .step .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;display:grid;place-items:center;font-size:13px;}
+  .step .body h3{margin:1px 0 4px;font-size:14.5px;}
+  .step .body p{margin:0;font-size:12.5px;color:var(--ink-soft);}
+
+  /* worked example day card */
+  .day{background:var(--card);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);overflow:hidden;margin:6px 0 4px;}
+  .day .head{background:var(--green-soft);border-bottom:1px solid #c2ddcb;padding:12px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+  .day .head b{font-size:14px;color:var(--green);}
+  .day .head span{font-size:12px;color:var(--ink-soft);}
+  .job{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);font-size:13px;}
+  .job:last-child{border-bottom:none;}
+  .job .t{flex:none;width:54px;font-weight:800;color:var(--green);font-size:12.5px;}
+  .job .who{flex:1;min-width:0;}
+  .job .who b{font-size:13.5px;} .job .who span{display:block;font-size:11.5px;color:var(--ink-soft);}
+  .job .dur{flex:none;font-size:12px;color:var(--ink-soft);font-weight:700;}
+  .day .foot{background:#faf8f2;padding:12px 16px;font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+  .day .foot b{color:var(--ink);}
+
+  .calc{background:#f4f6f1;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:12.5px;color:#2f4a3a;line-height:1.8;margin:8px 0 0;}
+  .calc code{background:#e2e8dd;border-radius:4px;padding:1px 6px;font-size:11.5px;}
+
+  .callout{border-radius:10px;padding:13px 15px;margin:14px 0 0;font-size:12.5px;line-height:1.6;display:flex;gap:10px;}
+  .callout .i{flex:none;font-weight:800;}
+  .callout.amber{background:var(--amber-soft);border:1px solid #ecd6a4;}
+  .callout.blue{background:var(--blue-soft);border:1px solid #c4dde8;}
+  .callout.green{background:var(--green-soft);border:1px solid #c2ddcb;}
+
+  ul.clean{list-style:none;padding:0;margin:8px 0 0;}
+  ul.clean li{padding:6px 0 6px 24px;position:relative;font-size:13px;border-bottom:1px solid var(--line);}
+  ul.clean li:last-child{border-bottom:none;}
+  ul.clean li::before{content:"✓";position:absolute;left:2px;color:var(--green2);font-weight:800;}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="mark">S</div>
+    <div>
+      <h1>SolarGuard — Tervezőmotor</h1>
+      <p>Kapacitás-alapú napi beosztás + osztott kiszállási díj · vezetői jóváhagyással · Innovatív Napelem Kft.</p>
+    </div>
+  </header>
+  <div class="divider"></div>
+
+  <!-- INPUTS -->
+  <h2 class="sec"><span class="b">⚙</span> A három bemenet + a korlát</h2>
+  <div class="inputs">
+    <div class="inp"><h4>📍 Földrajzi közelség</h4><p>A <code>Régió</code> / irányítószám szerinti fürtök — egy napra csak egymáshoz közeli helyszínek.</p></div>
+    <div class="inp"><h4>⏱️ Munka időigénye</h4><p>A <code>Becsült időkeret</code> kategóriánként; ez tölti fel a napot.</p></div>
+    <div class="inp"><h4>🚦 SLA-sáv</h4><p>A sürgős ügyek előresorolása a tervben.</p></div>
+  </div>
+  <div class="callout green" style="margin-top:12px;"><span class="i">▣</span><div><b>A korlát:</b> egy szerelői munkanap <b>~6 hasznos órája</b> (helyszíni munkára). A tervező addig tölt fel egy napot egy régión belül, amíg a munkák <b>összesített időigénye</b> belefér — nem darabszámra, hanem időre tervez.</div></div>
+
+  <!-- ALGORITHM -->
+  <h2 class="sec"><span class="b">⟐</span> A tervező lépései</h2>
+  <div class="step"><div class="n">1</div><div class="body"><h3>Ütemezhető ügyek lekérése</h3><p>Minden <code>elfogadott árajánlat</code> utáni, kiszállást igénylő, még be nem osztott ügy.</p></div></div>
+  <div class="step"><div class="n">2</div><div class="body"><h3>Régiós fürtök</h3><p>Az ügyek csoportosítása irányítószám / régió szerint.</p></div></div>
+  <div class="step"><div class="n">3</div><div class="body"><h3>Időkeret-összegzés</h3><p>Fürtön belül a <code>Becsült időkeret</code>-ek összege + a becsült utazás.</p></div></div>
+  <div class="step"><div class="n">4</div><div class="body"><h3>SLA-rangsor</h3><p>A sürgős ügyek előresorolása, hogy ne csússzanak a reakcióidőn túl.</p></div></div>
+  <div class="step"><div class="n">5</div><div class="body"><h3>Napra bontás</h3><p>A fürt feltöltése a <strong>~6 órás</strong> kapacitásig, sorrendezve → napi terv-javaslat.</p></div></div>
+  <div class="step"><div class="n">6</div><div class="body"><h3>Vezetői jóváhagyás</h3><p>A vezető átnézi, módosítja, jóváhagyja → az ügyek <code>Ütemezve</code> státuszba kerülnek, indul a 4. (Időpont) e-mail.</p></div></div>
+
+  <!-- WORKED EXAMPLE -->
+  <h2 class="sec"><span class="b">▶</span> Példa egy napi terv-javaslatra</h2>
+  <div class="day">
+    <div class="head"><b>Nyugat-Dunántúl · kedd</b><span>Szerelő: 1 fő · kapacitás ~6 ó</span></div>
+    <div class="job"><div class="t">08:30</div><div class="who"><b>Kovács J.</b> <span>8000 Székesfehérvár · állapotfelmérés</span></div><div class="dur">1,5 ó</div></div>
+    <div class="job"><div class="t">10:30</div><div class="who"><b>Nagy P.</b> <span>8000 Székesfehérvár · inverter-hibakeresés</span></div><div class="dur">3 ó</div></div>
+    <div class="job"><div class="t">14:00</div><div class="who"><b>Tóth I.</b> <span>8001 Székesfehérvár · éves karbantartás</span></div><div class="dur">1 ó</div></div>
+    <div class="foot"><span>Összes helyszíni munka: <b>5,5 ó</b> (belefér a ~6 órába)</span><span>Ügyfelek: <b>3</b></span></div>
+  </div>
+
+  <!-- SPLIT COST -->
+  <h2 class="sec"><span class="b">÷</span> Osztott kiszállási díj</h2>
+  <p style="font-size:13px;color:var(--ink-soft);margin:0 0 6px;">A teljes napi útvonal kiszállási díja egyenlően elosztva az aznapi ügyfelek között.</p>
+  <div class="calc">
+    Teljes napi útvonal kiszállási díja: <code>24 000 Ft</code> ÷ aznapi ügyfelek: <code>3</code> = <b>8 000 Ft / ügyfél</b><br>
+    <span style="color:#7a8b80;">a teljes 24 000 Ft töredéke — ez önmagában értékesítési érv az ügyfél felé.</span>
+  </div>
+  <div class="callout amber"><span class="i">!</span><div><b>Becsült max → végleges a tervnél.</b> Bejelentéskor még nem tudjuk, hányan lesznek aznap, ezért az ügyfél egy <b>becsült maximumot</b> lát; az osztott összeg a napi terv véglegesítésekor (6. lépés után) rögzül, és a végszámlán jelenik meg.</div></div>
+
+  <!-- APPROVAL VIEW -->
+  <h2 class="sec"><span class="b">✔</span> Mit lát a vezető a jóváhagyásnál</h2>
+  <ul class="clean">
+    <li>A javasolt nap: kik, hol, milyen sorrendben, mennyi idő — egy képernyőn</li>
+    <li>Napi kapacitás-kihasználtság (belefér-e, van-e még hely)</li>
+    <li>Átrendezés / kategória- és időkeret-felülírás kézzel</li>
+    <li>Egy gomb: <b>Jóváhagyom</b> → innen minden automatikus (státusz + e-mailek)</li>
+  </ul>
+
+  <!-- IMPLEMENTATION -->
+  <h2 class="sec"><span class="b">⌘</span> Megvalósítás &amp; fázisok</h2>
+  <div class="callout blue"><span class="i">1</span><div><b>Induló (1. fázis): könnyített heurisztika.</b> Régió-fürt + időösszeg, valódi útvonal-API nélkül; a becsült utazást fix ráhagyással számoljuk. A vezetői jóváhagyás kompenzálja a pontatlanságot. Vélhetően <b>n8n</b>-ben (a miniCRM-automatizmus erre önmagában kevés).</div></div>
+  <div class="callout blue" style="margin-top:8px;"><span class="i">2</span><div><b>Később (3. fázis): valódi útvonal-optimalizálás.</b> Térkép-/távolság-API perces utazásidővel; a kalibrált, valós időkeretek finomítják a terveket.</div></div>
+  <div class="callout amber" style="margin-top:8px;"><span class="i">!</span><div><b>Tisztázandó:</b> a „teljes napi útvonal kiszállási díja" képlete (alapdíj + km-arányos?), és a becsült utazási ráhagyás mértéke a heurisztikához.</div></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolarGuard – Besoroló automatizmus</title>
+<style>
+  :root{
+    --ink:#16261d; --ink-soft:#4a5f53; --paper:#f6f4ee; --card:#ffffff;
+    --line:#dcdfd4; --green:#2D6B1A; --green2:#4E9A1C; --green-soft:#EFF8E8;
+    --amber:#E8841A; --amber-soft:#FFF8EC; --blue:#3A9AD9; --blue-soft:#EAF4FB;
+    --shadow:0 1px 2px rgba(22,38,29,.05),0 6px 22px rgba(22,38,29,.07);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:Arial,Helvetica,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .sheet{max-width:980px;margin:0 auto;padding:34px 26px 50px;}
+  header{display:flex;align-items:center;gap:18px;margin-bottom:6px;}
+  header .mark{width:46px;height:46px;border-radius:11px;background:linear-gradient(150deg,var(--green2),var(--green));
+    display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;flex:none;box-shadow:var(--shadow);}
+  header h1{margin:0;font-size:24px;letter-spacing:-.01em;}
+  header p{margin:2px 0 0;color:var(--ink-soft);font-size:13px;}
+  .divider{height:2.5px;background:var(--green);margin:15px 0 22px;border-radius:2px;}
+
+  .trigger{display:flex;gap:12px;align-items:center;background:var(--blue-soft);border:1px solid #c4dde8;
+    border-left:4px solid var(--blue);border-radius:10px;padding:13px 16px;margin-bottom:8px;font-size:13.5px;}
+  .trigger .ic{flex:none;width:30px;height:30px;border-radius:8px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;}
+  .trigger b{color:#1d556e;}
+
+  /* steps */
+  .step{display:flex;gap:14px;padding:16px 0;border-bottom:1px dashed var(--line);}
+  .step:last-of-type{border-bottom:none;}
+  .step .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;
+    display:grid;place-items:center;font-size:14px;}
+  .step .body{flex:1;min-width:0;}
+  .step h3{margin:2px 0 5px;font-size:15px;}
+  .step p{margin:0 0 8px;font-size:13px;color:var(--ink-soft);}
+  .logic{background:#f4f6f1;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12.5px;color:#2f4a3a;line-height:1.7;}
+  .logic code{background:#e2e8dd;border-radius:4px;padding:1px 6px;font-size:11.5px;}
+  .arrow{color:var(--green2);font-weight:800;}
+
+  table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;overflow:hidden;margin:10px 0 4px;}
+  thead th{background:var(--green);color:#eaf4ee;text-align:left;padding:8px 11px;font-size:11.5px;}
+  tbody td{padding:7px 11px;border-top:1px solid var(--line);vertical-align:top;}
+  tbody tr:nth-child(even){background:#faf8f2;}
+  .field{display:inline-block;background:var(--green-soft);color:var(--green);font-weight:700;font-size:11px;
+    padding:2px 8px;border-radius:5px;border:1px solid #c2ddcb;}
+
+  .out{display:flex;gap:12px;align-items:center;background:var(--green-soft);border:1px solid #c2ddcb;
+    border-left:4px solid var(--green2);border-radius:10px;padding:13px 16px;margin-top:14px;font-size:13.5px;}
+  .out .ic{flex:none;width:30px;height:30px;border-radius:8px;background:var(--green2);color:#fff;display:grid;place-items:center;font-weight:800;}
+
+  .callout{border-radius:10px;padding:12px 15px;margin:16px 0 0;font-size:12.5px;line-height:1.6;display:flex;gap:10px;}
+  .callout.amber{background:var(--amber-soft);border:1px solid #ecd6a4;}
+  .callout .i{flex:none;font-weight:800;}
+  h2.sec{font-size:16px;margin:26px 0 8px;}
+  .muted{font-size:11.5px;color:var(--ink-soft);margin:4px 0 0;}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="mark">S</div>
+    <div>
+      <h1>SolarGuard — Besoroló automatizmus</h1>
+      <p>Hogyan tölti ki a miniCRM a számolt mezőket a beérkezett bejelentésből · Innovatív Napelem Kft.</p>
+    </div>
+  </header>
+  <div class="divider"></div>
+
+  <div class="trigger">
+    <div class="ic">⚡</div>
+    <div><b>Trigger:</b> új adatlap jön létre a „SolarGuard Szerviz" pipeline-ban, <b>Új bejelentés</b> státuszban (az online űrlap kitöltésekor).</div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="step">
+    <div class="n">1</div>
+    <div class="body">
+      <h3>Szervizkategória meghatározása</h3>
+      <p>A „Mi a probléma?" tünet-jelölésekből. Több tünet esetén a <strong>leghosszabb időkeretű</strong> kategória nyer.</p>
+      <div class="logic">
+        beírja: <span class="field">Szervizkategória</span> a tünet–kategória tábla szerint (lásd lent).
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">2</div>
+    <div class="body">
+      <h3>Becsült időkeret</h3>
+      <p>A kategóriából, a tervezőmotor kapacitásszámításához.</p>
+      <div class="logic">
+        <code>Szervizkategória</code> <span class="arrow">→</span> beírja: <span class="field">Becsült időkeret (óra)</span>.
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">3</div>
+    <div class="body">
+      <h3>SLA-sáv (triázs-prioritás)</h3>
+      <p>A sürgősségből, kritikus kategória felülírással.</p>
+      <div class="logic">
+        ha <code>Sürgősség = Sürgős</code> <span class="arrow">→</span> <strong>Sürgős</strong><br>
+        különben ha <code>Kategória ∈ {Inverter-hibakeresés, Akkumulátor-ellenőrzés}</code> és <code>Sürgősség ≠ Nem sürgős</code> <span class="arrow">→</span> <strong>Sürgős</strong><br>
+        különben ha <code>Sürgősség = Hamarosan</code> <span class="arrow">→</span> <strong>Normál</strong><br>
+        különben ha <code>Kategória = Éves karbantartás</code> <span class="arrow">→</span> <strong>Tervezhető</strong><br>
+        különben <span class="arrow">→</span> <strong>Normál</strong> · beírja: <span class="field">SLA-sáv</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">4</div>
+    <div class="body">
+      <h3>Régió hozzárendelése</h3>
+      <p>Az irányítószámból, tartomány-alapon (a tervezőmotor földrajzi csoportosításához).</p>
+      <div class="logic">
+        <code>Irányítószám</code> <span class="arrow">→</span> tartomány-tábla <span class="arrow">→</span> beírja: <span class="field">Régió</span> (a konkrét tartományok megadása nyitott input).
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">5</div>
+    <div class="body">
+      <h3>Tag / nem tag (meglévő ügyfél?)</h3>
+      <p>Az e-mail (vagy telefon) egyeztetése a meglévő ügyfél-adatbázissal.</p>
+      <div class="logic">
+        ha az <code>E-mail</code> létezik a meglévő kontaktok közt <span class="arrow">→</span> <strong>Meglévő ügyfél</strong>, különben <strong>Új ügyfél</strong> · beírja: <span class="field">Tag/nem tag</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="n">6</div>
+    <div class="body">
+      <h3>Státuszváltás + 1. e-mail</h3>
+      <p>A besorolás kész → a triázs indul, és az ügyfél visszajelzést kap.</p>
+      <div class="logic">
+        státusz: <code>Új bejelentés</code> <span class="arrow">→</span> <strong>Vizsgálat &amp; egyeztetés</strong> · elindítja az <strong>1. e-mailt (Visszaigazolás)</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="out">
+    <div class="ic">✓</div>
+    <div><b>Eredmény:</b> az adatlapon kitöltve a Szervizkategória, Becsült időkeret, SLA-sáv, Régió és Tag/nem tag; az ügyfél megkapta a visszaigazolást; az ügy a kollégánál triázsra vár.</div>
+  </div>
+
+  <!-- REFERENCE TABLES -->
+  <h2 class="sec">Referencia-táblák</h2>
+
+  <p class="muted">1. lépés — tünet → kategória → időkeret</p>
+  <table>
+    <thead><tr><th>Választott tünet</th><th>Szervizkategória</th><th>Becsült idő</th></tr></thead>
+    <tbody>
+      <tr><td>Kevesebbet termel a megszokottnál</td><td>Állapotfelmérés</td><td>~1,5 ó</td></tr>
+      <tr><td>Inverter hibát jelez / pirosan villog</td><td>Inverter-hibakeresés</td><td>~3 ó</td></tr>
+      <tr><td>Lekapcsol / újraindul</td><td>Inverter-hibakeresés</td><td>~3 ó</td></tr>
+      <tr><td>Akkumulátor probléma / nem tölt</td><td>Akkumulátor-ellenőrzés</td><td>~2,5 ó</td></tr>
+      <tr><td>Éves ellenőrzést szeretnék</td><td>Éves karbantartás</td><td>~1 ó</td></tr>
+      <tr><td>Egyéb / nem tudom megítélni</td><td>Állapotfelmérés (alap)</td><td>~1,5 ó</td></tr>
+    </tbody>
+  </table>
+
+  <p class="muted">3. lépés — SLA-sáv jelentése (triázs-reakcióidő)</p>
+  <table>
+    <thead><tr><th>SLA-sáv</th><th>Jelentés</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Sürgős</strong></td><td>triázs 1 munkanapon belül</td></tr>
+      <tr><td><strong>Normál</strong></td><td>triázs 2 munkanapon belül</td></tr>
+      <tr><td><strong>Tervezhető</strong></td><td>triázs 3–5 munkanapon belül</td></tr>
+    </tbody>
+  </table>
+
+  <p class="muted">4. lépés — régió (PÉLDA szerkezet, a tartományok kitöltendők)</p>
+  <table>
+    <thead><tr><th>Irányítószám-tartomány</th><th>Régió (példa)</th></tr></thead>
+    <tbody>
+      <tr><td>1xxx</td><td>Budapest</td></tr>
+      <tr><td>2xxx</td><td>Közép (Pest m. agglomeráció)</td></tr>
+      <tr><td>7xxx–8xxx</td><td>Nyugat / Dél-Dunántúl</td></tr>
+      <tr><td>3xxx–4xxx</td><td>Kelet / Észak</td></tr>
+      <tr><td>…</td><td>… a tényleges ügyfélsűrűség szerint</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout amber">
+    <span class="i">!</span>
+    <div><b>miniCRM-megvalósítás.</b> Mindez a miniCRM <b>automatizmus</b> funkciójával felépíthető: a trigger az „Új bejelentés" státusz, a lépések feltételes mező-beírások (a tünet-, sürgősség- és irányítószám-mezők alapján), végül a státuszváltás indítja az e-mailt. A tag-egyeztetéshez a kontakt-keresés / meglévő-ügyfél jelölő használható. A konkrét mezőkódok és az irányítószám-tartományok élesítéskor véglegesülnek.</div>
+  </div>
+
+</div>
+</body>
+</html>

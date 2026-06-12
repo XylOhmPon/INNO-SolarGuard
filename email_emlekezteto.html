@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="hu">
+<!--
+  SolarGuard automata email #5 – EMLÉKEZTETŐ (kiszállás előtt 1 nappal)
+  Trigger: időzített – a "Kiszállás dátuma" mínusz 1 nap
+  Javasolt tárgy: Emlékeztető: holnap érkezünk – Innovatív Napelem
+  Megjegyzés: egyedi mezők (KiszallasDatuma, KiszallasIdosav) kódja véglegesítendő.
+-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="x-apple-disable-message-reformatting">
+	<meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+	<title>Innovatív Napelem – Emlékeztető a kiszállásról</title>
+	<!--[if mso]>
+	<noscript>
+		<xml>
+			<o:officedocumentsettings>
+				<o:pixelsperinch>96</o:pixelsperinch>
+			</o:officedocumentsettings>
+		</xml>
+	</noscript>
+	<![endif]-->
+	<style type="text/css">
+		body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+		table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+		img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+		body { margin: 0 !important; padding: 0 !important; background-color: #f4f4f4; width: 100% !important; }
+		.wrapper { background-color: #f4f4f4; width: 100%; }
+		.container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+		@media only screen and (max-width: 620px) {
+			.container { width: 100% !important; }
+			.content-padding { padding: 24px 16px !important; }
+			.logo-cell { padding: 24px 16px 16px 16px !important; }
+			.box-cell { padding: 14px 14px !important; }
+			.footer-cell { padding: 20px 16px !important; }
+			.logo-img { max-width: 240px !important; }
+		}
+	</style>
+</head>
+<body>
+
+	<table border="0" cellpadding="0" cellspacing="0" width="100%" class="wrapper">
+		<tbody>
+			<tr>
+				<td align="center" valign="top">
+
+					<table border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="max-width:600px;">
+						<tbody>
+							<!-- LOGO -->
+							<tr>
+								<td align="center" class="logo-cell" style="padding:28px 32px 20px 32px;background-color:#ffffff;">
+									<img src="https://cdn.minicrm.hu/doc/2026/03-27/W/X/WXMy8rUIAqBYOxVzyaKp7A-57284" alt="Innovatív Napelem" width="280" class="logo-img" style="display:block;max-width:280px;width:100%;height:auto;border:0;outline:none;text-decoration:none;">
+								</td>
+							</tr>
+
+							<!-- GREEN SEPARATOR -->
+							<tr>
+								<td style="padding:0 32px;">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tbody>
+											<tr>
+												<td style="border-bottom:2.5px solid #2D6B1A;font-size:0;line-height:0;">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+
+							<!-- MAIN CONTENT -->
+							<tr>
+								<td class="content-padding" style="padding:24px 32px 0 32px;background-color:#ffffff;">
+
+									<!-- GREETING -->
+									<p style="margin:0 0 20px 0;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#222222;font-weight:bold;">Tisztelt {%Person.Name%}!</p>
+
+									<p style="margin:0 0 20px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">
+										Csak egy rövid <strong>emlékeztető</strong>: a megbeszéltek szerint <strong>holnap</strong> érkezünk Önhöz a napelemes rendszer szervizére.
+									</p>
+
+									<!-- APPOINTMENT BOX (green) -->
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;">
+										<tbody>
+											<tr>
+												<td class="box-cell" style="background-color:#EFF8E8;border-left:4px solid #4E9A1C;padding:16px 18px;border-radius:4px;">
+													<p style="margin:0 0 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#4E9A1C;font-weight:bold;">A kiszállás időpontja:</p>
+													<p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">
+														<strong>{%Project.KiszallasDatuma%}</strong>, várható idősáv: <strong>{%Project.KiszallasIdosav%}</strong><br>
+														Helyszín: <strong>{%Address.PostalCode%} {%Address.City%}, {%Address.Address%}</strong>
+													</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<!-- PREP BOX (orange) -->
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px;">
+										<tbody>
+											<tr>
+												<td class="box-cell" style="background-color:#FFF8EC;border-left:4px solid #E8841A;padding:16px 18px;border-radius:4px;">
+													<table border="0" cellpadding="0" cellspacing="0" width="100%">
+														<tbody>
+															<tr>
+																<td valign="top" width="30" style="padding-right:8px;padding-top:1px;">
+																	<table border="0" cellpadding="0" cellspacing="0">
+																		<tbody>
+																			<tr>
+																				<td align="center" valign="middle" style="width:22px;height:22px;background-color:#E8841A;border-radius:11px;font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:900;color:#ffffff;line-height:22px;text-align:center;">!</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+																<td valign="top">
+																	<p style="margin:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#E8841A;font-weight:bold;">Kérjük, holnapra:</p>
+																	<table border="0" cellpadding="0" cellspacing="0" width="100%">
+																		<tbody>
+																			<tr>
+																				<td valign="top" width="16" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#E8841A;line-height:1.6;padding-top:1px;">•</td>
+																				<td valign="top" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;padding-bottom:6px;">legyen <strong>elérhető telefonon</strong> — szerelőnk érkezés előtt kb. <strong>30 perccel</strong> keresni fogja,</td>
+																			</tr>
+																			<tr>
+																				<td valign="top" width="16" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#E8841A;line-height:1.6;padding-top:1px;">•</td>
+																				<td valign="top" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;padding-bottom:6px;">biztosítsa a <strong>hozzáférést</strong> az ingatlanhoz és — ha szükséges — a villamos elosztószekrényhez,</td>
+																			</tr>
+																			<tr>
+																				<td valign="top" width="16" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#E8841A;line-height:1.6;padding-top:1px;">•</td>
+																				<td valign="top" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">inverter-vizsgálat esetén készítse elő a <strong>monitoring hozzáférést</strong> (pl. Solarman, FusionSolar).</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<!-- CLOSING TEXT -->
+									<p style="margin:0 0 20px 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">
+										Ha bármilyen <strong>akadály</strong> merült fel, kérjük, mielőbb jelezze — egyszerűen válaszoljon erre az e-mailre. Holnap találkozunk!
+									</p>
+
+								</td>
+							</tr>
+
+							<!-- FOOTER -->
+							<tr>
+								<td class="footer-cell" style="padding:4px 32px 32px 32px;background-color:#ffffff;">
+									<p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222222;line-height:1.6;">{%Sender.EmailSignature%}</p>
+								</td>
+							</tr>
+
+							<tr>
+								<td style="height:16px;background-color:#f4f4f4;font-size:0;line-height:0;">&nbsp;</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>
