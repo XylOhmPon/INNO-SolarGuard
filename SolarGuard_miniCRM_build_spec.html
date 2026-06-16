@@ -112,7 +112,7 @@
       <tr><td>Telefon</td><td><span class="ty">rendszer</span></td><td><code>{%Person.Phone%}</code></td><td><span class="src sys">rendszer</span></td></tr>
       <tr><td>Cím</td><td><span class="ty">rendszer</span></td><td><code>{%Address.Address%}</code></td><td><span class="src sys">rendszer</span></td></tr>
       <tr><td>Irányítószám</td><td><span class="ty">rendszer</span></td><td><code>{%Address.PostalCode%}</code> · régióhoz</td><td><span class="src sys">rendszer</span></td></tr>
-      <tr><td>Mi a probléma?</td><td><span class="ty">többválasztós</span></td><td>6 tünet-opció (lásd űrlap-spec)</td><td><span class="src form">űrlap</span></td></tr>
+      <tr><td>Mi a probléma?</td><td><span class="ty">többválasztós</span></td><td>7 tünet-opció (lásd űrlap-spec)</td><td><span class="src form">űrlap</span></td></tr>
       <tr><td>Rendszer mérete</td><td><span class="ty">legördülő</span></td><td>nem tudom / &lt;5 / 5–10 / 10–15 / 15–30 / 30+ kW</td><td><span class="src form">űrlap</span></td></tr>
       <tr><td>Van akkumulátor?</td><td><span class="ty">legördülő</span></td><td>igen / nem / nem tudom</td><td><span class="src form">űrlap</span></td></tr>
       <tr><td>Mióta üzemel?</td><td><span class="ty">legördülő</span></td><td>&lt;1 / 1–3 / 3–5 / 5+ év / nem tudom</td><td><span class="src form">űrlap</span></td></tr>
@@ -131,6 +131,7 @@
       <tr><td>SLA-sáv</td><td><span class="ty">legördülő</span></td><td>Sürgős / Normál / Tervezhető</td><td><span class="src auto">auto</span></td></tr>
       <tr><td>Régió</td><td><span class="ty">legördülő</span></td><td>irányítószám-tartomány szerint (kitöltendő)</td><td><span class="src auto">auto</span></td></tr>
       <tr><td>Tag/nem tag</td><td><span class="ty">legördülő</span></td><td>Meglévő ügyfél / Új ügyfél</td><td><span class="src auto">auto</span></td></tr>
+      <tr><td>Kategorizálásra vár</td><td><span class="ty">igen/nem</span></td><td>„Egyéb" bejelentésnél igen → kézi besorolás + CRM-teendő; a terv addig nem véglegesíthető</td><td><span class="src auto">auto</span></td></tr>
     </tbody>
   </table>
 
@@ -169,7 +170,7 @@
     <div class="item"><span class="tag a">auto</span><div><h4>Árajánlat-gombok</h4><p>Elfogadás → <code>Árajánlat elfogadva</code> → 4. e-mail; Módosítás → <code>Módosítás kérve</code> → belső riasztás (CRM-teendő + e-mail).</p></div></div>
     <div class="item"><span class="tag a">auto</span><div><h4>Időpont / Emlékeztető / Jegyzőkönyv / Értékelés</h4><p>státusz- és időzítés-alapú e-mail-triggerek (4–7). <strong>Emlékeztető-őr:</strong> az 5. e-mail csak akkor megy ki, ha az adatlap a kiküldéskor még <code>Időpont egyeztetve</code> státuszban van. <strong>Jegyzőkönyv+számla (6.):</strong> a pénzügy kézzel feltölti a számlát + jegyzőkönyvet az adatlapra → ez indítja az e-mailt a <strong>feltöltött csatolmányokkal</strong> → <code>Lezárva</code> (nem külső számlázó). Értékeléskérés: lezárás + <strong>3 nap</strong>.</p></div></div>
     <div class="item"><span class="tag a">auto</span><div><h4>Távellenőrzés-lezárás</h4><p>távolról megoldva → <code>Lezárva</code> + tájékoztató e-mail.</p></div></div>
-    <div class="item"><span class="tag a">auto</span><div><h4>Kötelező mezők (státusz-kapuk)</h4><p><code>Munkaleírás</code> + <code>Ajánlati ár</code> kötelező az <code>Árajánlat kiküldve</code> státuszhoz; a <code>Távellenőrzés eredménye</code> kötelező a távellenőrzés-lezáráshoz — <strong>üres mezővel nem léphet státuszt / nem mehet ki e-mail.</strong></p></div></div>
+    <div class="item"><span class="tag a">auto</span><div><h4>Kötelező mezők (státusz-kapuk)</h4><p><code>Munkaleírás</code> + <code>Ajánlati ár</code> kötelező az <code>Árajánlat kiküldve</code> státuszhoz; a <code>Távellenőrzés eredménye</code> kötelező a távellenőrzés-lezáráshoz; a <code>Kategorizálásra vár</code> jelzőt <strong>fel kell oldani</strong> (kézi besorolás) a triázsból való továbblépéshez — <strong>üres/aktív mezővel nem léphet státuszt / nem mehet ki e-mail.</strong></p></div></div>
   </div>
 
   <!-- BUILD ORDER -->

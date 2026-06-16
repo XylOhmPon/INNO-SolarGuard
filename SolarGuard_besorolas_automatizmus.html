@@ -82,8 +82,12 @@
       <h3>Szervizkategória meghatározása</h3>
       <p>A „Mi a probléma?" tünet-jelölésekből. Több tünet esetén a <strong>leghosszabb időkeretű</strong> kategória nyer. <strong>Döntetlen</strong> (azonos időkeret) esetén a <strong>konkrétabb</strong> kategória nyer — az „Egyéb / nem tudom megítélni" opció mindig veszít a konkrét tünettel szemben.</p>
       <div class="logic">
-        beírja: <span class="field">Szervizkategória</span> a tünet–kategória tábla szerint (lásd lent).
+        beírja: <span class="field">Szervizkategória</span> a tünet–kategória tábla szerint (lásd lent).<br>
+        <strong>HA</strong> a választás <code>Egyéb / nem tudom megítélni</code> (nincs konkrét tünet) <span class="arrow">→</span>
+        beírja: <span class="field">Kategorizálásra vár = igen</span>, és <strong>CRM-teendő</strong> a triázs-kollégának:
+        „Kézi besorolás szükséges — lásd a <em>Probléma leírása</em> mezőt + a feltöltött fotókat".
       </div>
+      <div class="callout amber" style="margin-top:10px;"><span class="i">!</span><div><b>Miért fontos:</b> az „Egyéb" alapértelmezett <em>Állapotfelmérés (~1,5 ó)</em> csak placeholder. A jelölő + teendő biztosítja, hogy a kolléga a <strong>szabad szöveg és a fotók alapján</strong> beállítsa a valódi kategóriát/időkeretet — így egy félrebecsült idő nem rontja el a napi tervet. A terv addig nem véglegesíthető, amíg a <code>Kategorizálásra vár</code> jelző aktív.</div></div>
     </div>
   </div>
 
@@ -161,6 +165,7 @@
       <tr><td>Kevesebbet termel a megszokottnál</td><td>Állapotfelmérés</td><td>~1,5 ó</td></tr>
       <tr><td>Inverter hibát jelez / pirosan villog</td><td>Inverter-hibakeresés</td><td>~3 ó</td></tr>
       <tr><td>Lekapcsol / újraindul</td><td>Inverter-hibakeresés</td><td>~3 ó</td></tr>
+      <tr><td>Lecsapja / kioldja a kismegszakítót</td><td>Inverter-hibakeresés</td><td>~3 ó</td></tr>
       <tr><td>Akkumulátor probléma / nem tölt</td><td>Akkumulátor-ellenőrzés</td><td>~2,5 ó</td></tr>
       <tr><td>Éves ellenőrzést szeretnék</td><td>Éves karbantartás</td><td>~1 ó</td></tr>
       <tr><td>Egyéb / nem tudom megítélni</td><td>Állapotfelmérés (alap)</td><td>~1,5 ó</td></tr>
