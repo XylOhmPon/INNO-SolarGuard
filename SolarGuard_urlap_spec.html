@@ -97,10 +97,11 @@
           </div>
           <div class="fld">
             <div class="row2">
-              <div style="flex:2"><label>Cím <span class="req">*</span></label><div class="input">Utca, házszám</div></div>
               <div style="flex:1"><label>Irsz. <span class="req">*</span></label><div class="input">0000</div></div>
+              <div style="flex:2"><label>Település <span class="req">*</span></label><div class="input">Város (irsz-ből kitölt)</div></div>
             </div>
           </div>
+          <div class="fld"><label>Cím (utca, házszám) <span class="req">*</span></label><div class="input">Utca, házszám</div></div>
 
           <div class="fld">
             <label>Mi a probléma? <span class="req">*</span> <span style="font-weight:400;color:#9aa89e;">(több is választható)</span></label>
@@ -151,6 +152,7 @@
           <tr><td>Telefon</td><td>telefon</td><td><span class="pill req">kötelező</span></td><td><code>{%Person.Phone%}</code></td></tr>
           <tr><td>Cím</td><td>szöveg</td><td><span class="pill req">kötelező</span></td><td><code>{%Address.Address%}</code></td></tr>
           <tr><td>Irányítószám</td><td>szöveg</td><td><span class="pill req">kötelező</span></td><td>geo-csoportosítás + régió · <strong>4 jegyű szám-validáció</strong> (csak érvényes magyar irsz.)</td></tr>
+          <tr><td>Település</td><td>szöveg</td><td><span class="pill req">kötelező</span></td><td><code>{%Address.City%}</code> · az irsz-ből <strong>auto-kitöltődik</strong>, de szerkeszthető</td></tr>
           <tr><td>Mi a probléma?</td><td>többválasztós</td><td><span class="pill req">kötelező</span></td><td>a besorolás alapja (lásd lent)</td></tr>
           <tr><td>Rendszer mérete</td><td>legördülő</td><td><span class="pill opt">opcionális</span></td><td>nem tudom / &lt;5 / 5–10 / 10–15 / 15–30 / 30+ kW</td></tr>
           <tr><td>Van akkumulátor?</td><td>legördülő</td><td><span class="pill opt">opcionális</span></td><td>igen / nem / nem tudom</td></tr>
@@ -179,6 +181,7 @@
 
       <div class="callout green"><span class="i">✓</span><div><b>Nincs elágazó űrlap-logika.</b> Az ügyfél csak tüneteket jelöl; a kategóriát, időt, SLA-t, régiót a beérkezés után a miniCRM-automatizmus számolja. Így a miniCRM saját űrlapja is elég — nem kell Vercel.</div></div>
       <div class="callout blue"><span class="i">📎</span><div><b>Fájlfeltöltés két ponton.</b> Itt az intake-en opcionálisan, és később a triázs során egy dedikált feltöltő-link e-mailben (ha több vagy utólagos fájl kell).</div></div>
+      <div class="callout green"><span class="i">🔁</span><div><b>Dupla bejelentés ellen két réteg.</b> <strong>1) Az űrlapon:</strong> küldés után a gomb letiltódik és <strong>köszönő/visszaigazoló oldal</strong> jelenik meg (nem az űrlap újra), így véletlen dupla-küldés sincs. <strong>2) A háttérben (duplikátum-szűrés):</strong> ha az e-mail/telefon egy <strong>nyitott ügyhöz</strong> tartozik (7 napos ablak), a rendszer <strong>nem nyit új adatlapot</strong> — a meglévőhöz fűzi és jelez a kezelőnek. Így nem duplázódnak sem az adatlapok, sem a megkeresési automatizmusok.</div></div>
       <div class="callout amber"><span class="i">!</span><div><b>Tisztázandó.</b> A „Rendszer mérete" és „Mióta üzemel" sávhatárai véglegesítendők; a tünetlista szövege a ti szakmai megfogalmazásotok szerint csiszolható.</div></div>
     </div>
 
