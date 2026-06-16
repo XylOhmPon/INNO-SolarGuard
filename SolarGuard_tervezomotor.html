@@ -90,11 +90,11 @@
   <!-- ALGORITHM -->
   <h2 class="sec"><span class="b">⟐</span> A tervező lépései</h2>
   <div class="step"><div class="n">1</div><div class="body"><h3>Ütemezhető ügyek lekérése</h3><p>Minden <code>elfogadott árajánlat</code> utáni, kiszállást igénylő, még be nem osztott ügy.</p></div></div>
-  <div class="step"><div class="n">2</div><div class="body"><h3>Régiós fürtök</h3><p>Az ügyek csoportosítása irányítószám / régió szerint.</p></div></div>
+  <div class="step"><div class="n">2</div><div class="body"><h3>Régiós fürtök</h3><p>Az ügyek csoportosítása irányítószám / régió szerint (9 zóna; a sűrű mag — 2xxx, 8xxx, 1xxx — ~hetente, a közepes zónák kéthetente, a ritkák körutas ütemezéssel).</p></div></div>
   <div class="step"><div class="n">3</div><div class="body"><h3>Időkeret-összegzés</h3><p>Fürtön belül a <code>Becsült időkeret</code>-ek összege + a becsült utazás.</p></div></div>
   <div class="step"><div class="n">4</div><div class="body"><h3>SLA-rangsor</h3><p>A sürgős ügyek előresorolása, hogy ne csússzanak a reakcióidőn túl.</p></div></div>
   <div class="step"><div class="n">5</div><div class="body"><h3>Napra bontás</h3><p>A fürt feltöltése a <strong>~6 órás</strong> kapacitásig, sorrendezve → napi terv-javaslat.</p></div></div>
-  <div class="step"><div class="n">6</div><div class="body"><h3>Vezetői jóváhagyás</h3><p>A vezető átnézi, módosítja, jóváhagyja → az ügyek <code>Ütemezve</code> státuszba kerülnek, indul a 4. (Időpont) e-mail.</p></div></div>
+  <div class="step"><div class="n">6</div><div class="body"><h3>Vezetői jóváhagyás</h3><p>A vezető átnézi, módosítja, jóváhagyja → az ügyek <code>Ütemezve</code> státuszba kerülnek, indul a 4. (Időpont) e-mail. <strong>SLA:</strong> ha <strong>24 órán belül</strong> nincs jóváhagyás, a rendszer a <strong>helyettes jóváhagyóhoz</strong> eszkalál (emlékeztető + a terv nem blokkolódik).</p></div></div>
 
   <!-- WORKED EXAMPLE -->
   <h2 class="sec"><span class="b">▶</span> Példa egy napi terv-javaslatra</h2>
@@ -110,8 +110,9 @@
   <h2 class="sec"><span class="b">÷</span> Osztott kiszállási díj</h2>
   <p style="font-size:13px;color:var(--ink-soft);margin:0 0 6px;">A teljes napi útvonal kiszállási díja egyenlően elosztva az aznapi ügyfelek között.</p>
   <div class="calc">
-    Teljes napi útvonal kiszállási díja: <code>24 000 Ft</code> ÷ aznapi ügyfelek: <code>3</code> = <b>8 000 Ft / ügyfél</b><br>
-    <span style="color:#7a8b80;">a teljes 24 000 Ft töredéke — ez önmagában értékesítési érv az ügyfél felé.</span>
+    <b>Napi útvonal díja</b> = <code>12 500 Ft alapdíj + teljes napi táv (km) × 180 Ft/km</code> <span style="color:#7a8b80;">(táv = oda-vissza a telephelytől)</span><br>
+    <b>Egy ügyfél díja</b> = napi útvonal díja ÷ aznapi ügyfelek száma, <strong>100 Ft-ra felfelé kerekítve</strong><br>
+    <span style="color:#7a8b80;">Példa: 60 km-es kör → 12 500 + 60×180 = <b>23 300 Ft</b> ÷ 3 ügyfél = 7 766,67 → <b>7 800 Ft / ügyfél</b> (felfelé). A teljes töredéke — értékesítési érv.</span>
   </div>
   <div class="callout amber"><span class="i">!</span><div><b>Becsült max → végleges a tervnél.</b> Bejelentéskor még nem tudjuk, hányan lesznek aznap, ezért az ügyfél egy <b>becsült maximumot</b> lát; az osztott összeg a napi terv véglegesítésekor (6. lépés után) rögzül, és a végszámlán jelenik meg.</div></div>
 
@@ -126,9 +127,9 @@
 
   <!-- IMPLEMENTATION -->
   <h2 class="sec"><span class="b">⌘</span> Megvalósítás &amp; fázisok</h2>
-  <div class="callout blue"><span class="i">1</span><div><b>Induló (1. fázis): könnyített heurisztika.</b> Régió-fürt + időösszeg, valódi útvonal-API nélkül; a becsült utazást fix ráhagyással számoljuk. A vezetői jóváhagyás kompenzálja a pontatlanságot. Vélhetően <b>n8n</b>-ben (a miniCRM-automatizmus erre önmagában kevés).</div></div>
+  <div class="callout blue"><span class="i">1</span><div><b>Induló (1. fázis): könnyített heurisztika.</b> Régió-fürt + időösszeg, valódi útvonal-API nélkül; a becsült utazást <strong>+30% időráhagyással</strong> számoljuk (a ~6 órás hasznos kapacitás ezt már tükrözi). A vezetői jóváhagyás kompenzálja a pontatlanságot. Vélhetően <b>n8n</b>-ben (a miniCRM-automatizmus erre önmagában kevés).</div></div>
   <div class="callout blue" style="margin-top:8px;"><span class="i">2</span><div><b>Később (3. fázis): valódi útvonal-optimalizálás.</b> Térkép-/távolság-API perces utazásidővel; a kalibrált, valós időkeretek finomítják a terveket.</div></div>
-  <div class="callout amber" style="margin-top:8px;"><span class="i">!</span><div><b>Tisztázandó:</b> a „teljes napi útvonal kiszállási díja" képlete (alapdíj + km-arányos?), és a becsült utazási ráhagyás mértéke a heurisztikához.</div></div>
+  <div class="callout green" style="margin-top:8px;"><span class="i">✓</span><div><b>Minden tervezési paraméter rögzítve:</b> alapdíj <strong>12 500 Ft</strong> + <strong>180 Ft/km</strong> · kerekítés 100 Ft fel · utazási puffer +30% · napi kapacitás ~6 ó · jóváhagyási SLA 24 ó + helyettes · régiók adatvezérelten (9 zóna, 2xxx finomítással).</div></div>
 
 </div>
 </body>

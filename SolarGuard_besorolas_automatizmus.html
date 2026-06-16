@@ -80,7 +80,7 @@
     <div class="n">1</div>
     <div class="body">
       <h3>Szervizkategória meghatározása</h3>
-      <p>A „Mi a probléma?" tünet-jelölésekből. Több tünet esetén a <strong>leghosszabb időkeretű</strong> kategória nyer.</p>
+      <p>A „Mi a probléma?" tünet-jelölésekből. Több tünet esetén a <strong>leghosszabb időkeretű</strong> kategória nyer. <strong>Döntetlen</strong> (azonos időkeret) esetén a <strong>konkrétabb</strong> kategória nyer — az „Egyéb / nem tudom megítélni" opció mindig veszít a konkrét tünettel szemben.</p>
       <div class="logic">
         beírja: <span class="field">Szervizkategória</span> a tünet–kategória tábla szerint (lásd lent).
       </div>
@@ -106,8 +106,8 @@
       <div class="logic">
         ha <code>Sürgősség = Sürgős</code> <span class="arrow">→</span> <strong>Sürgős</strong><br>
         különben ha <code>Kategória ∈ {Inverter-hibakeresés, Akkumulátor-ellenőrzés}</code> és <code>Sürgősség ≠ Nem sürgős</code> <span class="arrow">→</span> <strong>Sürgős</strong><br>
-        különben ha <code>Sürgősség = Hamarosan</code> <span class="arrow">→</span> <strong>Normál</strong><br>
         különben ha <code>Kategória = Éves karbantartás</code> <span class="arrow">→</span> <strong>Tervezhető</strong><br>
+        különben ha <code>Sürgősség = Hamarosan</code> <span class="arrow">→</span> <strong>Normál</strong><br>
         különben <span class="arrow">→</span> <strong>Normál</strong> · beírja: <span class="field">SLA-sáv</span>
       </div>
     </div>
@@ -177,17 +177,22 @@
     </tbody>
   </table>
 
-  <p class="muted">4. lépés — régió (PÉLDA szerkezet, a tartományok kitöltendők)</p>
+  <p class="muted">4. lépés — régió (adatvezérelt; 55 777 ügyfél tényleges eloszlása, 2026.06.16)</p>
   <table>
-    <thead><tr><th>Irányítószám-tartomány</th><th>Régió (példa)</th></tr></thead>
+    <thead><tr><th>Irsz.</th><th>Régió</th><th>Ügyfél-arány</th><th>Kadencia</th></tr></thead>
     <tbody>
-      <tr><td>1xxx</td><td>Budapest</td></tr>
-      <tr><td>2xxx</td><td>Közép (Pest m. agglomeráció)</td></tr>
-      <tr><td>7xxx–8xxx</td><td>Nyugat / Dél-Dunántúl</td></tr>
-      <tr><td>3xxx–4xxx</td><td>Kelet / Észak</td></tr>
-      <tr><td>…</td><td>… a tényleges ügyfélsűrűség szerint</td></tr>
+      <tr><td>2xxx</td><td>Közép (Pest-agglo. + Dunaújváros) †</td><td>26,2%</td><td>sűrű</td></tr>
+      <tr><td>8xxx</td><td>Közép-Dunántúl (Székesfehérvár)</td><td>13,3%</td><td>sűrű</td></tr>
+      <tr><td>1xxx</td><td>Budapest</td><td>7,8%</td><td>sűrű</td></tr>
+      <tr><td>6xxx</td><td>Dél-Alföld (Kecskemét, Szeged)</td><td>13,1%</td><td>kéthetente</td></tr>
+      <tr><td>3xxx</td><td>Észak-Magyarország (Miskolc)</td><td>9,2%</td><td>kéthetente</td></tr>
+      <tr><td>7xxx</td><td>Dél-Dunántúl (Pécs)</td><td>8,6%</td><td>kéthetente</td></tr>
+      <tr><td>4xxx</td><td>Észak-Alföld (Debrecen)</td><td>8,5%</td><td>kéthetente</td></tr>
+      <tr><td>9xxx</td><td>Nyugat-Dunántúl (Győr)</td><td>6,8%</td><td>körutas</td></tr>
+      <tr><td>5xxx</td><td>Dél-Alföld (Szolnok, Békés)</td><td>6,4%</td><td>körutas</td></tr>
     </tbody>
   </table>
+  <p style="font-size:11.5px;color:var(--ink-soft);margin:4px 0 0;">† A 2xxx zóna a legnagyobb (26%) — a <strong>24xx Dunaújváros-mag</strong> operatívan külön körzetként kezelt a Pest-agglomerációtól. <strong>Kadencia</strong> (a tervező heurisztikájába): sűrű mag ~hetente, közepes ~kéthetente, ritka zónák körutas ütemezéssel.</p>
 
   <div class="callout amber">
     <span class="i">!</span>

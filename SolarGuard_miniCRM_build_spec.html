@@ -167,8 +167,9 @@
     <div class="item"><span class="tag a">auto</span><div><h4>Besoroló</h4><p><code>Új bejelentés</code> → kategória/idő/SLA/régió/tag számítás → <code>Vizsgálat &amp; egyeztetés</code> + 1. e-mail.</p></div></div>
     <div class="item"><span class="tag a">auto</span><div><h4>Fájlfeltöltés-visszaigazolás</h4><p>sikeres feltöltés → 2b. e-mail.</p></div></div>
     <div class="item"><span class="tag a">auto</span><div><h4>Árajánlat-gombok</h4><p>Elfogadás → <code>Árajánlat elfogadva</code> → 4. e-mail; Módosítás → <code>Módosítás kérve</code> → belső riasztás (CRM-teendő + e-mail).</p></div></div>
-    <div class="item"><span class="tag a">auto</span><div><h4>Időpont / Emlékeztető / Jegyzőkönyv / Értékelés</h4><p>státusz- és időzítés-alapú e-mail-triggerek (4–7).</p></div></div>
+    <div class="item"><span class="tag a">auto</span><div><h4>Időpont / Emlékeztető / Jegyzőkönyv / Értékelés</h4><p>státusz- és időzítés-alapú e-mail-triggerek (4–7). <strong>Emlékeztető-őr:</strong> az 5. e-mail csak akkor megy ki, ha az adatlap a kiküldéskor még <code>Időpont egyeztetve</code> státuszban van. <strong>Jegyzőkönyv+számla (6.):</strong> a pénzügy kézzel feltölti a számlát + jegyzőkönyvet az adatlapra → ez indítja az e-mailt a <strong>feltöltött csatolmányokkal</strong> → <code>Lezárva</code> (nem külső számlázó). Értékeléskérés: lezárás + <strong>3 nap</strong>.</p></div></div>
     <div class="item"><span class="tag a">auto</span><div><h4>Távellenőrzés-lezárás</h4><p>távolról megoldva → <code>Lezárva</code> + tájékoztató e-mail.</p></div></div>
+    <div class="item"><span class="tag a">auto</span><div><h4>Kötelező mezők (státusz-kapuk)</h4><p><code>Munkaleírás</code> + <code>Ajánlati ár</code> kötelező az <code>Árajánlat kiküldve</code> státuszhoz; a <code>Távellenőrzés eredménye</code> kötelező a távellenőrzés-lezáráshoz — <strong>üres mezővel nem léphet státuszt / nem mehet ki e-mail.</strong></p></div></div>
   </div>
 
   <!-- BUILD ORDER -->

@@ -325,18 +325,20 @@
   <div class="flow">
     <div class="node"><div class="badge">1</div><h5>Bejelentés</h5><small>Ügyfél kitölti az okos űrlapot a weben</small></div>
     <div class="arrow">→</div>
-    <div class="node"><div class="badge">2</div><h5>Besorolás</h5><small>Rendszer kategorizál + időt becsül, miniCRM-be ír</small></div>
+    <div class="node"><div class="badge">2</div><h5>Vizsgálat &amp; egyeztetés</h5><small>Besorolás, e-mailes egyeztetés, fájlfeltöltés (díjmentes triázs)</small></div>
     <div class="arrow">→</div>
-    <div class="node"><div class="badge">3</div><h5>Csoportosítás</h5><small>Földrajz + időkeret + SLA szerint napi terv-javaslat</small></div>
+    <div class="node"><div class="badge">3</div><h5>Távellenőrzés</h5><small>Ami távolról megoldható, lezárul; egyébként tovább</small></div>
     <div class="arrow">→</div>
-    <div class="node"><div class="badge">4</div><h5>Jóváhagyás</h5><small>Vezető átnézi, módosít, jóváhagyja</small></div>
+    <div class="node"><div class="badge">4</div><h5>Árajánlat</h5><small>Elfogadás / Módosítás — időpont csak elfogadás után</small></div>
     <div class="arrow">→</div>
-    <div class="node"><div class="badge">5</div><h5>Kiszállás</h5><small>Szerelő a véglegesített útvonalon dolgozik</small></div>
+    <div class="node"><div class="badge">5</div><h5>Időpont</h5><small>Kiszállás időpontjának egyeztetése + vezetői jóváhagyás</small></div>
     <div class="arrow">→</div>
-    <div class="node"><div class="badge">6</div><h5>Lezárás</h5><small>Jegyzőkönyv + osztott számla + értékeléskérés</small></div>
+    <div class="node"><div class="badge">6</div><h5>Kiszállás</h5><small>Szerelő a véglegesített útvonalon dolgozik</small></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="badge">7</div><h5>Lezárás</h5><small>Jegyzőkönyv + osztott számla + értékeléskérés</small></div>
   </div>
 
-  <p style="margin-top:8px">Minden lépéshez tartozik egy automatikus ügyfél-érintkezés (lásd a 8. szakaszt) és egy belső státuszváltás a miniCRM-ben, ami az n8n következő lépését indítja. A lánc egyetlen kézi beavatkozási pontja a <strong>4. lépés vezetői jóváhagyása</strong>.</p>
+  <p style="margin-top:8px">Minden lépéshez tartozik egy automatikus ügyfél-érintkezés (lásd a 8. szakaszt) és egy belső státuszváltás a miniCRM-ben, ami az automatizáció következő lépését indítja. A két emberi pont: az <strong>árajánlat elfogadása az ügyfél részéről</strong> (a kapu), és a <strong>napi terv vezetői jóváhagyása</strong>.</p>
 
   <h3>Mikor egyeztetjük a költséget az ügyféllel?</h3>
   <p>A szervizköltség egyeztetése <strong>két sávon</strong> fut, attól függően, hogy az ár előre ismert-e, vagy csak a helyszíni diagnózis után derül ki. Ez a megkülönböztetés a teljes rendszer szempontjából kritikus, mert javítást <strong>sosem végzünk előzetes ügyfél-jóváhagyás nélkül</strong>.</p>
@@ -344,11 +346,11 @@
   <div class="twocol">
     <div class="card" style="margin:0;border-top:3px solid var(--green)">
       <h3 style="margin-top:4px">A) Fix-áras munkák</h3>
-      <p style="font-size:13.5px;margin-bottom:10px;color:var(--ink-soft)">Mosás, állapotfelmérés, karbantartási csomag — az ár előre kalkulálható.</p>
+      <p style="font-size:13.5px;margin-bottom:10px;color:var(--ink-soft)">Állapotfelmérés, éves karbantartás, akkumulátor-ellenőrzés — az ár előre kalkulálható.</p>
       <ul class="clean">
-        <li>Az ár az <strong>időpont-értesítő emailben</strong> (2. érintkezés) szerepel, a becsült osztott kiszállási díjjal együtt</li>
-        <li>Az ügyfél a <strong>kiszállás visszaigazolásával fogadja el</strong> az árat — kiszállás csak elfogadott ár után</li>
-        <li>A végszámlán már csak a véglegesített osztott díj módosíthat (lefelé)</li>
+        <li>Az ár az <strong>árajánlatban</strong> szerepel az előre meghatározott díjjal — az ügyfél az <strong>Elfogadás</strong> gombbal hagyja jóvá</li>
+        <li>Időpontot csak <strong>elfogadott árajánlat után</strong> egyeztetünk</li>
+        <li>A végszámlán már csak a véglegesített osztott kiszállási díj módosíthat (lefelé)</li>
       </ul>
     </div>
     <div class="card" style="margin:0;border-top:3px solid var(--amber)">
@@ -393,7 +395,7 @@
     <div class="card">
       <h3 style="margin-top:4px">Amit a rendszer kiszámol</h3>
       <ul class="clean">
-        <li><strong>Szervizkategória</strong> (pl. inverterhiba, mosás, felmérés)</li>
+        <li><strong>Szervizkategória</strong> (pl. inverter-hibakeresés, állapotfelmérés, akkumulátor-ellenőrzés)</li>
         <li><strong>Becsült időigény</strong> a kategória alapján</li>
         <li><strong>SLA-sáv</strong> (sürgős hiba vs. tervezhető karbantartás)</li>
         <li><strong>Régió-besorolás</strong> az irányítószámból</li>
@@ -428,7 +430,7 @@
     </div>
     <div class="card" style="margin:0">
       <h3 style="margin-top:4px">A korlát</h3>
-      <p>Egy szerelői munkanap <strong>hasznos kapacitása</strong> (pl. ~7 óra helyszíni munka + utazás). A tervező addig tölti fel a napot, amíg a munkák <em>összesített</em> időigénye + a köztük lévő utazás belefér — nem darabszámra, hanem időre tervez.</p>
+      <p>Egy szerelői munkanap <strong>hasznos kapacitása ~6 óra</strong> helyszíni munka (az utazási ráhagyással csökkentve). A tervező addig tölti fel a napot, amíg a munkák <em>összesített</em> időigénye + a köztük lévő utazás belefér — nem darabszámra, hanem időre tervez.</p>
       <p style="margin-bottom:0;font-size:13.5px;color:var(--ink-soft)">Így nem fordulhat elő, hogy 3 nagy munka egy napra kerül, amikor időben kettő is alig fér be.</p>
     </div>
   </div>
@@ -462,8 +464,7 @@
   <p>A tervező csak akkor tud reálisan számolni, ha minden szervizkategóriához van egy <strong>alapértelmezett időigény</strong>. Ezek kiindulási értékek — finomítjuk, ahogy valós adat gyűlik. A vezető a jóváhagyásnál egyedileg felülírhatja őket.</p>
 
   <div class="timegrid">
-    <div class="timecard"><div class="t">~1,5 <small>óra</small></div><h5>Állapotfelmérés</h5><p>Tagsági belépő feltétel; műszeres átvizsgálás</p></div>
-    <div class="timecard"><div class="t">~2 <small>óra</small></div><h5>Panelmosás</h5><p>Méret- és tetőtípus-függő; nagyobb rendszernél több</p></div>
+    <div class="timecard"><div class="t">~1,5 <small>óra</small></div><h5>Állapotfelmérés</h5><p>Műszeres átvizsgálás, diagnosztika</p></div>
     <div class="timecard"><div class="t">~3 <small>óra</small></div><h5>Inverter-hibakeresés</h5><p>Diagnosztika + lehetséges helyszíni javítás</p></div>
     <div class="timecard"><div class="t">~2,5 <small>óra</small></div><h5>Akkumulátor-ellenőrzés</h5><p>BMS, cellafeszültség, SOC/SOH kiértékelés</p></div>
     <div class="timecard"><div class="t">~1 <small>óra</small></div><h5>Éves karbantartás (alap)</h5><p>Checklist-alapú átvizsgálás meglévő dokumentációval</p></div>
@@ -498,7 +499,7 @@
 
   <div class="callout warn">
     <span class="ico">⚠︎</span>
-    <p><strong>Kulcsrészlet a rendszerben.</strong> Bejelentéskor még nem tudjuk, hányan lesznek aznap. Ezért az ügyfél a bejelentéskor egy <strong>becsült maximumot</strong> lát, és a <strong>végszámlán</strong> jelenik meg a kedvezményes, osztott összeg. A díj csak a napi terv véglegesítésekor (4. lépés után) rögzül. Ezt az űrlapnak és az árajánlatnak is egyértelműen kommunikálnia kell, hogy ne legyen félreértés.</p>
+    <p><strong>Kulcsrészlet a rendszerben.</strong> Bejelentéskor még nem tudjuk, hányan lesznek aznap. Ezért az ügyfél a bejelentéskor egy <strong>becsült maximumot</strong> lát, és a <strong>végszámlán</strong> jelenik meg a kedvezményes, osztott összeg. A díj csak a napi terv véglegesítésekor rögzül. Ezt az űrlapnak és az árajánlatnak is egyértelműen kommunikálnia kell, hogy ne legyen félreértés.</p>
   </div>
 </section>
 
@@ -506,7 +507,7 @@
 <section id="kommunikacio" class="anchor">
   <div class="sec-head">
     <div class="sec-num">8</div>
-    <div><h2>Automatikus kommunikáció</h2><p>Öt fix + egy feltételes érintkezési pont, emailen, a miniCRM státuszaira kötve</p></div>
+    <div><h2>Automatikus kommunikáció</h2><p>A teljes ügyfél-életciklus emailen, a miniCRM státuszaira kötve</p></div>
   </div>
 
   <p>A teljes ügyfél-életciklus automatizált, <strong>emailes</strong> csatornán. Minden üzenetet egy miniCRM-státuszváltás indít az n8n-en keresztül — nincs kézi levelezés.</p>
@@ -514,19 +515,23 @@
   <table>
     <thead><tr><th style="width:34px">#</th><th>Érintkezési pont</th><th>Mi váltja ki</th><th>Tartalom</th></tr></thead>
     <tbody>
-      <tr><td class="num">1</td><td><strong>Visszaigazolás</strong></td><td>Űrlap beérkezik</td><td>„Megkaptuk a bejelentésed" + ügyszám + mi a következő lépés</td></tr>
-      <tr><td class="num">2</td><td><strong>Időpont- és ár-értesítés</strong></td><td>Napi terv jóváhagyva</td><td>Kiszállás dátuma, becsült idősáv, <strong>a fix-áras munka díja</strong> + becsült osztott kiszállás — az ügyfél visszaigazolással fogadja el</td></tr>
-      <tr><td class="num">3</td><td><strong>Emlékeztető</strong></td><td>Kiszállás előtt 1 nappal (időzített)</td><td>Holnap jövünk — elérhetőség, mit készítsen elő</td></tr>
-      <tr><td class="num">★</td><td><strong>Javítási árajánlat</strong> <span class="tag human">feltételes</span></td><td>Csak speciális, nem-készletezett alkatrész kell</td><td>Tételes árajánlat + <strong>jóváhagyó link/gomb</strong> — külön kiszállás beszerzés után. (A helyben elvégzett javításokhoz nincs rá szükség, ott a jóváhagyás a helyszínen történik.)</td></tr>
-      <tr><td class="num">4</td><td><strong>Jegyzőkönyv</strong></td><td>Munka lezárva</td><td>Elektronikus karbantartási jegyzőkönyv + végszámla az osztott díjjal</td></tr>
-      <tr><td class="num">5</td><td><strong>Értékeléskérés</strong></td><td>Jegyzőkönyv után (időzített)</td><td>Elégedettség / vélemény kérése, opcionális ajánlási link</td></tr>
+      <tr><td class="num">1</td><td><strong>Visszaigazolás</strong></td><td>Vizsgálat &amp; egyeztetés</td><td>„Megkaptuk a bejelentésed, megvizsgáljuk" + ügyszám</td></tr>
+      <tr><td class="num">2</td><td><strong>Egyeztetés / fájlkérés</strong></td><td>triázs</td><td>Pontosító kérdések + a <strong>fájlfeltöltő űrlap linkje</strong></td></tr>
+      <tr><td class="num">2b</td><td><strong>Fájlfeltöltés-visszaigazolás</strong></td><td>Sikeres feltöltés</td><td>„Megkaptuk a fájljait, jó helyen van"</td></tr>
+      <tr><td class="num">3</td><td><strong>Árajánlat</strong></td><td>Árajánlat kiküldve</td><td>Tételes ajánlat, <strong>Elfogadás / Módosítást kérek</strong> gombok + 14 napos lejárat</td></tr>
+      <tr><td class="num">4</td><td><strong>Időpont-visszaigazolás</strong></td><td>Árajánlat elfogadva</td><td>Kiszállás dátuma/idősávja — <strong>ár nélkül</strong> (az már elfogadva)</td></tr>
+      <tr><td class="num">5</td><td><strong>Emlékeztető</strong></td><td>Kiszállás előtt 1 nappal (időzített)</td><td>Holnap jövünk — elérhetőség, mit készítsen elő</td></tr>
+      <tr><td class="num">6</td><td><strong>Jegyzőkönyv + számla</strong></td><td>Jegyzőkönyv + számla feltöltve (pénzügy)</td><td>A feltöltött karbantartási jegyzőkönyv + számla <strong>PDF csatolmányként</strong></td></tr>
+      <tr><td class="num">7</td><td><strong>Értékeléskérés</strong></td><td>Lezárva + 3 nap (időzített)</td><td>Elégedettség / vélemény + ajánlási link</td></tr>
+      <tr><td class="num">↪</td><td><strong>Távellenőrzés-tájékoztató</strong></td><td>Távolról megoldva → Lezárva</td><td>„Elvégeztük a távellenőrzést, ezt találtuk" — díjmentes</td></tr>
+      <tr><td class="num">⚠</td><td><strong>Belső módosítás-riasztás</strong> <span class="tag human">belső</span></td><td>Módosítás kérve</td><td>A döntéshozónak (CRM-teendő + e-mail), nem az ügyfélnek</td></tr>
     </tbody>
   </table>
-  <p style="font-size:13.5px;color:var(--ink-soft);margin-top:-6px"><strong>★</strong> A javítási árajánlat email csak a <strong>speciális, nem-készletezett alkatrész</strong> esetén lép be (B) sáv kivétele). A bevett javítások a helyszínen, jóváhagyással és azonnal lezárulnak; a fix-áras munkák ára pedig már a 2. érintkezésben elfogadásra került.</p>
+  <p style="font-size:13.5px;color:var(--ink-soft);margin-top:-6px">Az <strong>árajánlat elfogadása a kapu</strong>: az ár ott kerül elfogadásra, így az időpont-email (4.) már nem mutat új árat. A bevett helyszíni javítások jóváhagyással, azonnal lezárulnak; külön javítási árajánlat csak <strong>speciális, nem-készletezett alkatrész</strong> esetén megy ki.</p>
 
   <div class="callout note">
     <span class="ico">✉︎</span>
-    <p><strong>Küldő fiók.</strong> Érdemes egy dedikált cég-email címet használni (pl. <em>szerviz@…</em>) a személyes Gmail helyett — egységes feladó, jobb kézbesíthetőség, és a válaszok is egy helyre futnak be. A sablonok a miniCRM-ből perszonalizálhatók (név, ügyszám, időpont, összeg).</p>
+    <p><strong>Küldő fiók.</strong> A dedikált <em>hibabejelentes@innovativnapelem.hu</em> cím a feladó — egységes, jó kézbesíthetőség. Fontos: ez egy <strong>figyelt postafiók</strong> (nem no-reply), így az ügyfél válaszai befutnak és kezelhetők. A sablonok a miniCRM-ből perszonalizálhatók (név, ügyszám, időpont, összeg).</p>
   </div>
 </section>
 

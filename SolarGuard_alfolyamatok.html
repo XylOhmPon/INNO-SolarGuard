@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolarGuard – Al-folyamatok és élesítési kiegészítések</title>
+<style>
+  :root{
+    --ink:#16261d; --ink-soft:#4a5f53; --paper:#f6f4ee; --card:#ffffff;
+    --line:#dcdfd4; --green:#2D6B1A; --green2:#4E9A1C; --green-soft:#EFF8E8;
+    --amber:#E8841A; --amber-soft:#FFF8EC; --blue:#3A9AD9; --blue-soft:#EAF4FB;
+    --red:#b4452f; --red-soft:#f7e6e1; --shadow:0 1px 2px rgba(22,38,29,.05),0 6px 22px rgba(22,38,29,.07);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:Arial,Helvetica,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .sheet{max-width:1000px;margin:0 auto;padding:34px 26px 50px;}
+  header{display:flex;align-items:center;gap:18px;margin-bottom:6px;}
+  header .mark{width:46px;height:46px;border-radius:11px;background:linear-gradient(150deg,var(--green2),var(--green));
+    display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px;flex:none;box-shadow:var(--shadow);}
+  header h1{margin:0;font-size:23px;letter-spacing:-.01em;}
+  header p{margin:2px 0 0;color:var(--ink-soft);font-size:13px;}
+  .divider{height:2.5px;background:var(--green);margin:15px 0 20px;border-radius:2px;}
+  p.lead{font-size:13px;color:var(--ink-soft);margin:0 0 18px;}
+
+  .grouplabel{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;margin:22px 0 10px;padding-left:2px;}
+  .grouplabel.crit{color:var(--red);} .grouplabel.high{color:#9a5a10;}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);
+    padding:16px 18px;margin-bottom:12px;}
+  .card .top{display:flex;align-items:center;gap:11px;margin-bottom:10px;}
+  .card .id{flex:none;font-size:11px;font-weight:800;padding:3px 9px;border-radius:6px;background:var(--green-soft);color:var(--green);border:1px solid #c2ddcb;}
+  .card .id.r{background:var(--red-soft);color:var(--red);border-color:#e7b9ae;}
+  .card h3{margin:0;font-size:15.5px;}
+  .rowline{display:flex;gap:10px;margin:6px 0;font-size:13px;}
+  .rowline .k{flex:none;width:88px;font-weight:700;color:var(--ink-soft);font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;padding-top:2px;}
+  .rowline .v{flex:1;min-width:0;}
+  .rowline .v code{background:#eef0ea;border-radius:4px;padding:1px 6px;font-size:11.5px;color:#3c5446;}
+  .flow-inline{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:2px;}
+  .chip{background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:3px 9px;font-size:11.5px;font-weight:600;}
+  .arr{color:var(--green2);font-weight:800;}
+  .def{display:inline-block;background:var(--amber-soft);border:1px solid #ecd6a4;color:#8a610f;border-radius:6px;padding:2px 8px;font-size:11.5px;font-weight:700;}
+  .note{font-size:12px;color:var(--ink-soft);background:var(--blue-soft);border:1px solid #c4dde8;border-radius:8px;padding:10px 13px;margin-top:18px;line-height:1.6;}
+  .note b{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="mark">S</div>
+    <div>
+      <h1>SolarGuard — Al-folyamatok &amp; élesítési kiegészítések</h1>
+      <p>A hibaelemzés (2026.06.15) nyomán pótolt folyamat-ágak · a <span style="color:#8a610f;font-weight:700;">sárga</span> értékek javasolt alapértékek</p>
+    </div>
+  </header>
+  <div class="divider"></div>
+  <p class="lead">A fő dokumentumokban javított pontok mellett ezek a hiányzó <strong>al-folyamatok</strong>. Mindegyikhez konkrét logika és javasolt alapérték tartozik — ezeket jóváhagyhatod vagy felülírhatod, mielőtt a build-be kerülnek.</p>
+
+  <div class="grouplabel crit">🔴 Kritikus folyamat-ágak</div>
+
+  <!-- H-01 -->
+  <div class="card">
+    <div class="top"><span class="id r">H-01</span><h3>Ajánlat-lejárat folyamata (timeout)</h3></div>
+    <div class="rowline"><div class="k">Trigger</div><div class="v">Az ügyfél a kiküldött ajánlatnál <code>Árajánlat kiküldve</code> státuszban marad, nem reagál.</div></div>
+    <div class="rowline"><div class="k">Folyamat</div><div class="v"><div class="flow-inline"><span class="chip">Kiküldés</span><span class="arr">→</span><span class="chip">−3 nap: emlékeztető e-mail</span><span class="arr">→</span><span class="chip">14. nap: lejár</span><span class="arr">→</span><span class="chip">Meghiúsult + lezáró e-mail</span></div></div></div>
+    <div class="rowline"><div class="k">Alapérték</div><div class="v"><span class="def">Érvényesség: 14 nap</span> &nbsp;<span class="def">Emlékeztető: 3 nappal előtte</span></div></div>
+    <div class="rowline"><div class="k">Kimenet</div><div class="v">Lejáratkor udvarias lezáró e-mail („ajánlata lejárt, bármikor keressen minket"); az ügy <code>Meghiúsult (ajánlat lejárt)</code> állapotba kerül.</div></div>
+  </div>
+
+  <!-- H-07 -->
+  <div class="card">
+    <div class="top"><span class="id r">H-07</span><h3>Módosítási hurok → visszatérés a fő folyamatba</h3></div>
+    <div class="rowline"><div class="k">Trigger</div><div class="v">Ügyfél a <strong>„Módosítást kérek"</strong> gombra kattint → <code>Módosítás kérve</code> + belső riasztás (kész).</div></div>
+    <div class="rowline"><div class="k">Folyamat</div><div class="v"><div class="flow-inline"><span class="chip">Módosítás kérve</span><span class="arr">→</span><span class="chip">kolléga egyeztet</span><span class="arr">→</span><span class="chip">új/módosított ajánlat</span><span class="arr">→</span><span class="chip">Árajánlat kiküldve (új, 14 nap)</span></div></div></div>
+    <div class="rowline"><div class="k">Kulcs</div><div class="v">A módosítás <strong>visszacsatol</strong> az <code>Árajánlat kiküldve</code> státuszra (új lejárattal), onnan a normál Elfogadás/Módosítás folytatódik — nincs zsákutca.</div></div>
+    <div class="rowline"><div class="k">Alapérték</div><div class="v"><span class="def">Max. 3 kör</span>, utána a rendszer telefonos egyeztetést javasol (eszkaláció a döntéshozóhoz).</div></div>
+  </div>
+
+  <!-- H-06 -->
+  <div class="card">
+    <div class="top"><span class="id r">H-06</span><h3>Jegyzőkönyv + számla — dokumentumkezelés</h3></div>
+    <div class="rowline"><div class="k">Számla</div><div class="v">A <strong>pénzügyi osztály állítja ki kézzel</strong> (a bevált módon), és <strong>feltölti a miniCRM-adatlapra</strong>. Nincs külső számlázó-integráció — a meglévő folyamat marad.</div></div>
+    <div class="rowline"><div class="k">Jegyzőkönyv</div><div class="v">A meglévő <strong>napelem-jegyzőkönyv folyamatból</strong>, szintén az adatlapra feltöltve.</div></div>
+    <div class="rowline"><div class="k">Gate + e-mail</div><div class="v">A 6. e-mail (jegyzőkönyv + számla) csak akkor megy ki, ha <strong>mindkét dokumentum fel van töltve</strong> — az automatizmus a feltöltött csatolmányokat küldi, majd → <code>Lezárva</code>. <strong>Emberi kapu:</strong> a pénzügy feltöltése indítja; addig az ügy <code>Elvégezve</code> (számlázásra vár) marad.</div></div>
+  </div>
+
+  <!-- H-26 -->
+  <div class="card">
+    <div class="top"><span class="id r">H-26</span><h3>Távellenőrzés al-folyamat</h3></div>
+    <div class="rowline"><div class="k">Ki végzi</div><div class="v">A triázs-kolléga / szerviztechnikus <strong>távolról</strong>, a monitoring-adatok (Solarman, FusionSolar) alapján.</div></div>
+    <div class="rowline"><div class="k">Kritérium</div><div class="v"><strong>Távolról megoldható:</strong> szoftveres reset, beállítás, távoli firmware, vagy egyértelmű diagnózis fizikai beavatkozás nélkül. <strong>Kiszállás kell:</strong> fizikai hiba/csere, vagy bizonytalan diagnózis.</div></div>
+    <div class="rowline"><div class="k">Határidő</div><div class="v">Az <code>SLA-sáv</code> szerint (Sürgős 1 mn · Normál 2 mn · Tervezhető 3–5 mn).</div></div>
+    <div class="rowline"><div class="k">Kimenet</div><div class="v">Megoldva → <code>Lezárva</code> + távellenőrzés-e-mail; egyébként → <code>Árajánlat kiküldve</code>.</div></div>
+  </div>
+
+  <!-- H-27 -->
+  <div class="card">
+    <div class="top"><span class="id r">H-27</span><h3>Speciális alkatrész — várakozási folyamat</h3></div>
+    <div class="rowline"><div class="k">Trigger</div><div class="v">Helyszínen kiderül: nem-készletezett speciális alkatrész kell → <code>Árajánlat folyamatban / Alkatrész-várakozás</code>.</div></div>
+    <div class="rowline"><div class="k">Folyamat</div><div class="v">Beszerzés alatt az ügyfél <strong>időközönként tájékoztatást</strong> kap; megérkezéskor új kiszállás ütemezése a tervezőbe.</div></div>
+    <div class="rowline"><div class="k">Alapérték</div><div class="v"><span class="def">Max. várakozás: 30 nap</span> &nbsp;<span class="def">Tájékoztatás: hetente</span></div></div>
+    <div class="rowline"><div class="k">Kimenet</div><div class="v">Ha a max. időn belül nem érkezik meg → egyeztetés + lemondási opció az ügyfélnek.</div></div>
+  </div>
+
+  <!-- H-25 -->
+  <div class="card">
+    <div class="top"><span class="id r">H-25</span><h3>„Meghiúsult" ág</h3></div>
+    <div class="rowline"><div class="k">Kiváltó ok</div><div class="v">Ajánlat lejárt · ügyfél elállt · nem elérhető · visszamondta — <strong>ok-mezővel</strong> rögzítve.</div></div>
+    <div class="rowline"><div class="k">Ügyfél-e-mail</div><div class="v">Ok szerint udvarias lezáró („sajnáljuk, bármikor visszavárjuk") — a „nem elérhető" esetben több próbálkozás után.</div></div>
+    <div class="rowline"><div class="k">Utánkövetés</div><div class="v">A meghiúsult ügyek listázhatók — <span class="def">90 nap múlva</span> automatikus újra-megkeresés (opcionális kampány).</div></div>
+  </div>
+
+  <div class="grouplabel high">🟠 Magas prioritású kiegészítések</div>
+
+  <!-- H-13 -->
+  <div class="card">
+    <div class="top"><span class="id">H-13</span><h3>Duplikátum-szűrés</h3></div>
+    <div class="rowline"><div class="k">Logika</div><div class="v">Új bejelentéskor <code>e-mail</code> / <code>telefon</code> egyeztetés a meglévő <strong>nyitott</strong> ügyekkel.</div></div>
+    <div class="rowline"><div class="k">Alapérték</div><div class="v"><span class="def">Ablak: 7 nap</span> — ha ugyanattól nyitott ügy van, ne hozzon létre újat, hanem <strong>fűzze a meglévőhöz</strong> + jelezzen a kezelőnek.</div></div>
+  </div>
+
+  <!-- H-14 -->
+  <div class="card">
+    <div class="top"><span class="id">H-14</span><h3>Fájlfeltöltő-link biztonsága &amp; lejárata</h3></div>
+    <div class="rowline"><div class="k">Biztonság</div><div class="v">A link <strong>projekt-specifikus, nem kitalálható token</strong> (random hash, nem szekvenciális ID).</div></div>
+    <div class="rowline"><div class="k">Alapérték</div><div class="v"><span class="def">Lejárat: 7 nap</span> a kiküldéstől (vagy az ügy lezárásáig). Lejárat után új link kérhető.</div></div>
+  </div>
+
+  <!-- H-23 -->
+  <div class="card">
+    <div class="top"><span class="id">H-23</span><h3>n8n hibakezelés</h3></div>
+    <div class="rowline"><div class="k">Újrapróba</div><div class="v"><span class="def">3× retry</span> (növekvő várakozással) minden külső hívásnál (miniCRM, számlázó, e-mail).</div></div>
+    <div class="rowline"><div class="k">Tartós hiba</div><div class="v"><strong>Admin-riasztás</strong> (e-mail) + a feladat sorba állítása; kritikus hiba (pl. PDF) esetén az ügyfél-e-mail nem megy ki hibásan.</div></div>
+    <div class="rowline"><div class="k">Napló</div><div class="v">Minden lépés logolva a visszakövethetőséghez.</div></div>
+  </div>
+
+  <!-- H-24 -->
+  <div class="card">
+    <div class="top"><span class="id">H-24</span><h3>Szerelő értesítése a napi munkáról</h3></div>
+    <div class="rowline"><div class="k">Folyamat</div><div class="v">A napi terv <strong>jóváhagyásakor</strong> a beosztott szerelő automatikus <strong>e-mailt</strong> kap a teljes napi listával: címek, sorrend, munkatípus, becsült idő, „Üzenet a szerelőnek".</div></div>
+    <div class="rowline"><div class="k">Visszacsatolás</div><div class="v">A szerelő a munka végén rögzíti a <code>Tényleges időtartam</code>-ot (az időkeret-kalibrációhoz).</div></div>
+  </div>
+
+  <div class="note">
+    <b>Még tőled szükséges üzleti adat (a build előtt):</b> <b>D-01</b> irányítószám→régió tartományok · <b>D-02</b> a díjképlet konkrét számai (alapdíj, Ft/km) · a <b>számlázó</b> kiválasztása (H-06). A fenti <span style="color:#8a610f;font-weight:700;">sárga</span> alapértékeket jóváhagyhatod vagy felülírhatod.
+  </div>
+
+</div>
+</body>
+</html>
